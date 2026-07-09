@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toma Murakawa — Photographer</title>
+<meta name="description" content="Toma Murakawa is a photographer based in Stanford, California, making graduation, portrait, sports, landscape, event, and everyday photographs on commission.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,400&family=Hanken+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/exifr/dist/full.umd.js"></script>
+<style>
+  :root{
+    --paper:#FBFAF7;
+    --ink:#16181D;
+    --accent:#2B3D5C;
+    --muted:#908B82;
+    --line:#E4E0D8;
+    --card:#F3F0E9;
+    --maxw:1280px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Hanken Grotesk',system-ui,sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:var(--paper)}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+  .mono{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 28px;
+    transition:background .4s ease, padding .4s ease, box-shadow .4s ease;
+  }
+  nav.scrolled{
+    background:rgba(251,250,247,.88);
+    backdrop-filter:blur(12px);
+    padding:14px 28px;
+    box-shadow:0 1px 0 var(--line);
+  }
+  .brand{font-family:'Cormorant',serif;font-size:22px;font-weight:600;letter-spacing:.01em}
+  .nav-links{display:flex;gap:34px;align-items:center}
+  .nav-links a{
+    font-size:13px;letter-spacing:.04em;position:relative;padding:4px 0;
+    color:var(--ink);opacity:.78;transition:opacity .25s;
+  }
+  .nav-links a::after{
+    content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--accent);transition:width .3s ease;
+  }
+  .nav-links a:hover{opacity:1}
+  .nav-links a:hover::after{width:100%}
+  .nav-toggle{display:none;background:none;border:0;cursor:pointer;width:30px;height:20px;position:relative;z-index:70}
+  .nav-toggle span{position:absolute;left:0;right:0;height:2px;background:var(--ink);border-radius:2px;transform-origin:center;transition:transform .32s cubic-bezier(.2,.7,.2,1),top .32s cubic-bezier(.2,.7,.2,1),opacity .18s ease}
+  .nav-toggle span:nth-child(1){top:0}
+  .nav-toggle span:nth-child(2){top:9px}
+  .nav-toggle span:nth-child(3){top:18px}
+  .nav-toggle.x span:nth-child(1){top:9px;transform:rotate(45deg)}
+  .nav-toggle.x span:nth-child(2){opacity:0;transform:scaleX(0)}
+  .nav-toggle.x span:nth-child(3){top:9px;transform:rotate(-45deg)}
+  .nav-scrim{position:fixed;inset:0;z-index:55;background:rgba(14,15,18,.42);opacity:0;visibility:hidden;transition:opacity .4s ease;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+  .nav-scrim.open{opacity:1;visibility:visible}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;height:100vh;min-height:620px;width:100%;overflow:hidden}
+  .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .hero-ph{position:absolute;inset:0;background:
+      radial-gradient(120% 120% at 70% 20%, #20242c 0%, #14161b 55%, #0e1014 100%);}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,14,.28) 0%,rgba(10,11,14,.05) 38%,rgba(10,11,14,.62) 100%)}
+  .hero-inner{position:absolute;z-index:3;left:0;right:0;bottom:0;padding:0 28px 7vh}
+  .hero-inner .wrap{display:flex;flex-direction:column;gap:18px}
+  .hero h1{
+    font-family:'Cormorant',serif;color:var(--paper);
+    font-weight:500;line-height:.96;letter-spacing:-.01em;
+    font-size:clamp(52px,9vw,128px);
+  }
+  .hero h1 em{font-style:italic;font-weight:400}
+  .hero-sub{display:flex;align-items:center;gap:16px;flex-wrap:wrap;color:rgba(251,250,247,.82)}
+  .hero-sub .mono{color:rgba(251,250,247,.7)}
+  .hero-sub .dot{width:4px;height:4px;border-radius:50%;background:rgba(251,250,247,.5)}
+  .hero-sub p{font-size:15px;max-width:34ch}
+  .vf{position:absolute;z-index:3;width:26px;height:26px;border:1.5px solid rgba(251,250,247,.55)}
+  .vf.tl{top:96px;left:28px;border-right:0;border-bottom:0}
+  .vf.tr{top:96px;right:28px;border-left:0;border-bottom:0}
+  .vf.bl{bottom:28px;left:28px;border-right:0;border-top:0}
+  .vf.br{bottom:28px;right:28px;border-left:0;border-top:0}
+
+  .scrollcue{position:absolute;z-index:3;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px}
+  .scrollcue .mono{color:rgba(251,250,247,.7)}
+  .scrollcue i{width:1px;height:34px;background:linear-gradient(rgba(251,250,247,.7),transparent);display:block;animation:drop 2.1s ease-in-out infinite}
+  @keyframes drop{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:120px 0}
+  .eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--accent)}
+  .sec-title{font-family:'Cormorant',serif;font-weight:500;font-size:clamp(34px,5vw,58px);line-height:1.02;letter-spacing:-.01em;max-width:18ch}
+
+  /* ---------- WORK / COVER GRID ---------- */
+  #work{padding-top:130px}
+  .work-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:48px;flex-wrap:wrap}
+  .work-head p{max-width:40ch;color:#4a4d55;font-size:15.5px}
+  .covers{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .cover{
+    position:relative;overflow:hidden;cursor:pointer;background:var(--card);
+    aspect-ratio:4/3;border:1px solid var(--line);
+  }
+  .cover img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+  .cover:hover img{transform:scale(1.045)}
+  .cover .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,14,0) 30%,rgba(10,11,14,.72) 100%);transition:opacity .4s}
+  .cover-meta{position:absolute;left:22px;right:22px;bottom:20px;z-index:2;color:var(--paper);display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+  .cover-meta h3{font-family:'Cormorant',serif;font-weight:500;font-size:30px;line-height:1}
+  .cover-meta .mono{color:rgba(251,250,247,.78)}
+  .cover .enter{font-size:12px;letter-spacing:.06em;opacity:0;transform:translateX(-6px);transition:.35s;color:var(--paper)}
+  .cover:hover .enter{opacity:1;transform:translateX(0)}
+  .cover-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted)}
+  .cover-ph svg{width:26px;height:26px;opacity:.5}
+  .cover-ph .mono{font-size:10px}
+
+  /* ---------- GALLERY OVERLAY ---------- */
+  .gallery-view{position:fixed;inset:0;z-index:80;background:var(--paper);overflow-y:auto;opacity:0;visibility:hidden;transition:opacity .4s}
+  .gallery-view.open{opacity:1;visibility:visible}
+  .gv-bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:20px 28px;background:rgba(251,250,247,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .gv-bar h2{font-family:'Cormorant',serif;font-weight:500;font-size:30px;display:flex;align-items:baseline;gap:14px}
+  .gv-bar h2 .mono{font-size:11px}
+  .gv-close{background:none;border:1px solid var(--line);border-radius:50px;padding:9px 18px;cursor:pointer;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;display:flex;gap:8px;align-items:center;transition:.25s}
+  .gv-close:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .masonry{column-count:3;column-gap:16px;padding:28px}
+  .tile{break-inside:avoid;margin-bottom:16px;position:relative;cursor:zoom-in;background:var(--card);overflow:hidden}
+  .tile img{width:100%;height:auto;transition:opacity .5s}
+  .tile .cap{padding:9px 2px 2px;display:flex;justify-content:space-between;gap:10px}
+  .tile .cap .mono{font-size:10px;letter-spacing:.1em}
+  .tile-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted);text-align:center;padding:0 10px}
+  .tile-ph svg{width:22px;height:22px;opacity:.45}
+  .tile-ph .mono{font-size:10px}
+  .gv-empty{padding:80px 28px;text-align:center;color:var(--muted);font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em}
+
+  /* ---------- LIGHTBOX ---------- */
+  .lb{position:fixed;inset:0;z-index:90;background:rgba(14,15,18,.96);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .35s}
+  .lb.open{opacity:1;visibility:visible}
+  .lb img{max-width:88vw;max-height:82vh;object-fit:contain;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+  .lb-cap{position:absolute;bottom:26px;left:0;right:0;text-align:center;color:rgba(251,250,247,.8)}
+  .lb-cap .mono{color:rgba(251,250,247,.65)}
+  .lb-btn{position:absolute;background:none;border:0;color:var(--paper);cursor:pointer;padding:18px;opacity:.7;transition:opacity .2s}
+  .lb-btn:hover{opacity:1}
+  .lb-prev{left:8px;top:50%;transform:translateY(-50%)}
+  .lb-next{right:8px;top:50%;transform:translateY(-50%)}
+  .lb-close{top:14px;right:16px}
+  .lb-btn svg{width:30px;height:30px}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid;grid-template-columns:0.85fr 1fr;gap:64px;align-items:center}
+  .portrait{position:relative;aspect-ratio:4/5;background:var(--card);border:1px solid var(--line);overflow:hidden}
+  .portrait img{width:100%;height:100%;object-fit:cover}
+  .portrait-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted)}
+  .portrait-ph svg{width:28px;height:28px;opacity:.5}
+  .about-body h2{font-family:'Cormorant',serif;font-weight:500;font-size:clamp(30px,4vw,46px);line-height:1.05;margin-bottom:24px;letter-spacing:-.01em}
+  .about-body p{color:#43464e;margin-bottom:18px;font-size:16px;max-width:52ch}
+  .about-body p.lead{font-size:18.5px;color:var(--ink)}
+  .facts{display:flex;gap:40px;margin-top:34px;flex-wrap:wrap}
+  .fact .mono{display:block;margin-bottom:6px}
+  .fact strong{font-family:'Cormorant',serif;font-weight:500;font-size:24px}
+
+  /* ---------- FAQ ---------- */
+  #faq{padding-top:40px}
+  .faq-list{margin-top:38px;border-top:1px solid var(--line)}
+  .faq-item{border-bottom:1px solid var(--line)}
+  .faq-q{width:100%;background:none;border:0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:24px 0;text-align:left;font-family:'Cormorant',serif;font-size:23px;font-weight:500;color:var(--ink);transition:color .25s}
+  .faq-q:hover{color:var(--accent)}
+  .faq-ico{position:relative;width:16px;height:16px;flex:none}
+  .faq-ico::before,.faq-ico::after{content:"";position:absolute;background:var(--accent);transition:transform .3s ease}
+  .faq-ico::before{top:50%;left:0;right:0;height:1.5px;transform:translateY(-50%)}
+  .faq-ico::after{left:50%;top:0;bottom:0;width:1.5px;transform:translateX(-50%)}
+  .faq-q[aria-expanded="true"] .faq-ico::after{transform:translateX(-50%) scaleY(0)}
+  .faq-a{overflow:hidden;max-height:0;transition:max-height .35s ease}
+  .faq-a p{padding:0 0 26px;margin:0;color:#43464e;font-size:16px;max-width:62ch}
+  @media(prefers-reduced-motion:reduce){.faq-a{transition:none}}
+
+  /* ---------- CONTACT ---------- */
+  #contact{background:var(--ink);color:var(--paper)}
+  #contact .eyebrow::before{background:#6f7d96}
+  #contact .mono{color:#9aa3b2}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px}
+  .contact-left h2{font-family:'Cormorant',serif;font-weight:500;font-size:clamp(34px,5vw,56px);line-height:1.02;margin-bottom:22px}
+  .contact-left p{color:rgba(251,250,247,.72);max-width:40ch;margin-bottom:34px;font-size:16px}
+  .contact-line{display:flex;flex-direction:column;gap:18px}
+  .contact-line a{display:flex;align-items:center;gap:14px;font-size:17px;width:fit-content;padding:6px 0;border-bottom:1px solid transparent;transition:border-color .3s}
+  .contact-line a:hover{border-color:rgba(251,250,247,.5)}
+  .contact-line a svg{width:18px;height:18px;opacity:.8}
+  form{display:grid;gap:16px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .field label{display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#9aa3b2;margin-bottom:7px}
+  .field input,.field select,.field textarea{
+    width:100%;background:transparent;border:0;border-bottom:1px solid rgba(251,250,247,.24);
+    color:var(--paper);font-family:inherit;font-size:15px;padding:9px 0;transition:border-color .3s;
+  }
+  .field textarea{resize:vertical;min-height:84px}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--paper)}
+  .field select option{color:var(--ink)}
+  .field input::placeholder,.field textarea::placeholder{color:rgba(251,250,247,.4)}
+  .submit{margin-top:8px;justify-self:start;background:var(--paper);color:var(--ink);border:0;padding:15px 34px;cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;transition:transform .25s,background .25s}
+  .submit:hover{transform:translateY(-2px);background:#fff}
+  .submit:disabled{opacity:.6;cursor:default;transform:none}
+  .form-status{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.03em;line-height:1.5;margin-top:2px;min-height:1em}
+  .form-status.ok{color:#9ec59e}
+  .form-status.err{color:#e0a1a1}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--ink);color:rgba(251,250,247,.6);padding:40px 0;border-top:1px solid rgba(251,250,247,.1)}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+  .foot .brand{color:var(--paper);font-size:20px}
+  .foot .mono{font-size:10px}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:880px){
+    .nav-links{position:fixed;inset:0 0 0 auto;width:min(80vw,340px);background:var(--paper);flex-direction:column;justify-content:center;align-items:flex-start;gap:8px;padding:40px 44px;transform:translateX(100%);transition:transform .42s cubic-bezier(.2,.7,.2,1);box-shadow:-20px 0 60px rgba(0,0,0,.14)}
+    .nav-links.open{transform:translateX(0)}
+    .nav-links a{font-size:26px;font-family:'Cormorant',serif;opacity:1;padding:10px 0}
+    .nav-links a::after{display:none}
+    .nav-toggle{display:block}
+    .about-grid,.contact-grid{grid-template-columns:1fr;gap:40px}
+    .masonry{column-count:2}
+    section{padding:88px 0}
+  }
+  @media(max-width:560px){
+    .covers{grid-template-columns:1fr}
+    .masonry{column-count:1}
+    .row2{grid-template-columns:1fr}
+    .hero-inner{padding-bottom:9vh}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#top" class="brand">Toma Murakawa</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="nav-links" id="navLinks">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+<div class="nav-scrim" id="navScrim"></div>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <img class="hero-img" src="hero.jpg" alt="Photograph by Toma Murakawa"
+       onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+  <div class="hero-ph" style="display:none"></div>
+  <span class="vf tl"></span><span class="vf tr"></span><span class="vf bl"></span><span class="vf br"></span>
+  <div class="hero-inner">
+    <div class="wrap">
+      <span class="mono" style="color:rgba(251,250,247,.7)">Stanford, California · Available on commission</span>
+      <h1>Light, held<br><em>a moment longer.</em></h1>
+      <div class="hero-sub">
+        <span class="mono">Graduations</span><span class="dot"></span>
+        <span class="mono">Portraits</span><span class="dot"></span>
+        <span class="mono">Sports</span><span class="dot"></span>
+        <span class="mono">Landscape</span><span class="dot"></span>
+        <span class="mono">Events</span><span class="dot"></span>
+        <span class="mono">Life</span>
+      </div>
+    </div>
+  </div>
+  <div class="scrollcue"><i></i><span class="mono">Scroll</span></div>
+</header>
+
+<!-- WORK -->
+<section id="work">
+  <div class="wrap">
+    <div class="work-head reveal">
+      <div>
+        <div class="eyebrow"><span class="mono">Selected work</span></div>
+        <h2 class="sec-title">Six ways of<br>seeing a day.</h2>
+      </div>
+      <p>Each frame below opens a full gallery. Click in to see the complete set, shot on location across the Bay Area and beyond.</p>
+    </div>
+
+    <div class="covers reveal">
+      <div class="cover" data-cat="grad">
+        <img src="cover-graduations.jpg" alt="Graduation photography"
+             onerror="this.style.display='none';this.parentElement.querySelector('.cover-ph').style.display='flex';this.nextElementSibling.style.opacity='.25'">
+        <div class="veil"></div>
+        <div class="cover-ph" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 7h4l2-3h6l2 3h4v13H3z"/><circle cx="12" cy="13" r="4"/></svg>
+          <span class="mono">cover-graduations.jpg</span>
+        </div>
+        <div class="cover-meta"><div><span class="mono">01 / Caps &amp; gowns</span><h3>Graduations</h3></div><span class="enter">Enter →</span></div>
+      </div>
+
+      <div class="cover" data-cat="portrait">
+        <img src="cover-portraits.jpg" alt="Portrait photography"
+             onerror="this.style.display='none';this.parentElement.querySelector('.cover-ph').style.display='flex';this.nextElementSibling.style.opacity='.25'">
+        <div class="veil"></div>
+        <div class="cover-ph" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 7h4l2-3h6l2 3h4v13H3z"/><circle cx="12" cy="13" r="4"/></svg>
+          <span class="mono">cover-portraits.jpg</span>
+        </div>
+        <div class="cover-meta"><div><span class="mono">02 / People</span><h3>Portraits</h3></div><span class="enter">Enter →</span></div>
+      </div>
+
+      <div class="cover" data-cat="sport">
+        <img src="cover-sport.jpg" alt="Sports photography"
+             onerror="this.style.display='none';this.parentElement.querySelector('.cover-ph').style.display='flex';this.nextElementSibling.style.opacity='.25'">
+        <div class="veil"></div>
+        <div class="cover-ph" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 7h4l2-3h6l2 3h4v13H3z"/><circle cx="12" cy="13" r="4"/></svg>
+          <span class="mono">cover-sport.jpg</span>
+        </div>
+        <div class="cover-meta"><div><span class="mono">03 / Motion</span><h3>Sports</h3></div><span class="enter">Enter →</span></div>
+      </div>
+
+      <div class="cover" data-cat="land">
+        <img src="cover-landscape.jpg" alt="Landscape photography"
+             onerror="this.style.display='none';this.parentElement.querySelector('.cover-ph').style.display='flex';this.nextElementSibling.style.opacity='.25'">
+        <div class="veil"></div>
+        <div class="cover-ph" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 7h4l2-3h6l2 3h4v13H3z"/><circle cx="12" cy="13" r="4"/></svg>
+          <span class="mono">cover-landscape.jpg</span>
+        </div>
+        <div class="cover-meta"><div><span class="mono">04 / Place</span><h3>Landscape</h3></div><span class="enter">Enter →</span></div>
+      </div>
+
+      <div class="cover" data-cat="events">
+        <img src="cover-events.jpg" alt="Event photography"
+             onerror="this.style.display='none';this.parentElement.querySelector('.cover-ph').style.display='flex';this.nextElementSibling.style.opacity='.25'">
+        <div class="veil"></div>
+        <div class="cover-ph" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 7h4l2-3h6l2 3h4v13H3z"/><circle cx="12" cy="13" r="4"/></svg>
+          <span class="mono">cover-events.jpg</span>
+        </div>
+        <div class="cover-meta"><div><span class="mono">05 / Occasions</span><h3>Events</h3></div><span class="enter">Enter →</span></div>
+      </div>
+
+      <div class="cover" data-cat="life">
+        <img src="cover-life.jpg" alt="Everyday life photography"
+             onerror="this.style.display='none';this.parentElement.querySelector('.cover-ph').style.display='flex';this.nextElementSibling.style.opacity='.25'">
+        <div class="veil"></div>
+        <div class="cover-ph" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 7h4l2-3h6l2 3h4v13H3z"/><circle cx="12" cy="13" r="4"/></svg>
+          <span class="mono">cover-life.jpg</span>
+        </div>
+        <div class="cover-meta"><div><span class="mono">06 / Everyday</span><h3>Life</h3></div><span class="enter">Enter →</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="portrait reveal">
+        <img src="your-portrait.jpg" alt="Toma Murakawa"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="portrait-ph" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 7h4l2-3h6l2 3h4v13H3z"/><circle cx="12" cy="13" r="4"/></svg>
+          <span class="mono">your-portrait.jpg</span>
+        </div>
+      </div>
+      <div class="about-body reveal">
+        <div class="eyebrow"><span class="mono">Behind the camera</span></div>
+        <h2>I make pictures that<br>still feel like the day<br>they were taken.</h2>
+        <p class="lead">I'm Toma — a photographer based in Stanford, California, working with families, athletes, and graduates across the Bay Area.</p>
+        <p>My work lives where a moment turns into a memory: the walk across a stage, the last light on a ridgeline, a portrait that finally looks like the person in it. I shoot to keep the feeling intact, not just the frame.</p>
+        <p>Every gallery here was made on commission. If your day is coming up, I'd love to be the one holding the camera.</p>
+        <div class="facts">
+          <div class="fact"><span class="mono">Based in</span><strong>Stanford, CA</strong></div>
+          <div class="fact"><span class="mono">Working since</span><strong>2019</strong></div>
+          <div class="fact"><span class="mono">Travel</span><strong>Bay Area &amp; beyond</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="eyebrow reveal"><span class="mono">Good to know</span></div>
+    <h2 class="sec-title reveal">A few quick answers.</h2>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>How do I book a session?</span><span class="faq-ico" aria-hidden="true"></span></button>
+        <div class="faq-a"><p>Send a note through the contact form below, or email me directly. I'll get back to you with availability and the next steps.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Where are you based, and do you travel?</span><span class="faq-ico" aria-hidden="true"></span></button>
+        <div class="faq-a"><p>I'm based in Stanford and shoot throughout the Bay Area. For projects farther out, just ask — travel is usually no problem.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>When will I get my photos?</span><span class="faq-ico" aria-hidden="true"></span></button>
+        <div class="faq-a"><p>Edited galleries are typically ready within about two weeks, with a few preview frames sooner.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Do sessions include digital files and prints?</span><span class="faq-ico" aria-hidden="true"></span></button>
+        <div class="faq-a"><p>Yes — you'll receive high-resolution digital images, and prints can be arranged on request.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="contact-left reveal">
+        <div class="eyebrow"><span class="mono">Get in touch</span></div>
+        <h2>Let's plan<br>your shoot.</h2>
+        <p>Tell me a little about what you're after and roughly when — I'll get back to you with availability and the next steps.</p>
+        <div class="contact-line">
+          <a href="mailto:mtomam01@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="m3 7 9 6 9-6"/></svg>
+            mtomam01@gmail.com
+          </a>
+          <a href="https://instagram.com/murakawatoma" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            @murakawatoma
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <form id="inqForm">
+          <div class="row2">
+            <div class="field"><label for="f-name">Name</label><input id="f-name" type="text" placeholder="Your name" required></div>
+            <div class="field"><label for="f-email">Email</label><input id="f-email" type="email" placeholder="you@email.com" required></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="f-type">Session type</label>
+              <select id="f-type">
+                <option>Graduation</option><option>Portrait</option><option>Sports / event</option><option>Landscape / print</option><option>Event</option><option>Life / everyday</option><option>Something else</option>
+              </select>
+            </div>
+            <div class="field"><label for="f-date">Approx. date</label><input id="f-date" type="text" placeholder="e.g. mid-June"></div>
+          </div>
+          <div class="field"><label for="f-msg">Details</label><textarea id="f-msg" placeholder="Where, what, and anything you have in mind…"></textarea></div>
+          <input type="checkbox" name="botcheck" id="botcheck" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="submit" type="submit" id="inqBtn">Send inquiry</button>
+          <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span class="brand">Toma Murakawa</span>
+    <span class="mono">© <span id="yr"></span> · Photographed in California</span>
+    <span class="mono">f/2 · 1/250 · ISO 100</span>
+  </div>
+</footer>
+
+<!-- GALLERY OVERLAY -->
+<div class="gallery-view" id="galleryView" role="dialog" aria-modal="true">
+  <div class="gv-bar">
+    <h2 id="gvTitle">Gallery <span class="mono" id="gvCount"></span></h2>
+    <button class="gv-close" id="gvClose">Close ✕</button>
+  </div>
+  <div class="masonry" id="masonry"></div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" role="dialog" aria-modal="true">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <img id="lbImg" src="" alt="">
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg></button>
+  <div class="lb-cap"><div id="lbTitle" style="font-family:'Cormorant',serif;font-size:20px"></div><div class="mono" id="lbExif"></div></div>
+</div>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Photos live in category folders in this GitHub repo. Drop any-named images
+  // into a folder and they appear automatically — no renaming needed.
+  const REPO = 'fishymur/Portfolio';
+  const CATS = {
+    grad:    {folder:'graduations', title:'Graduations'},
+    portrait:{folder:'portraits',   title:'Portraits'},
+    sport:   {folder:'sports',      title:'Sports'},
+    land:    {folder:'landscape',   title:'Landscape'},
+    events:  {folder:'events',      title:'Events'},
+    life:    {folder:'life',        title:'Life'}
+  };
+  const PH_RATIOS = ['4 / 5','3 / 2','1 / 1','2 / 3','3 / 2','4 / 5','5 / 4'];
+  const IMG_RE = /\.(jpe?g|png|webp|gif|avif)$/i;
+  const galleryCache = {};
+
+  async function readExif(src){
+    if(typeof exifr === 'undefined') return '';
+    try{
+      const d = await exifr.parse(src,['FNumber','ExposureTime','ISO','FocalLength']);
+      if(!d) return '';
+      const parts = [];
+      if(d.FocalLength) parts.push(Math.round(d.FocalLength)+'mm');
+      if(d.FNumber) parts.push('f/'+(+d.FNumber).toFixed(1).replace(/\.0$/,''));
+      if(d.ExposureTime) parts.push(d.ExposureTime>=1 ? d.ExposureTime+'s' : '1/'+Math.round(1/d.ExposureTime));
+      if(d.ISO) parts.push('ISO '+d.ISO);
+      return parts.join(' · ');
+    }catch(e){ return ''; }
+  }
+
+  // Ask GitHub for the list of files in a category folder, sorted by name.
+  async function fetchCategory(cat){
+    if(galleryCache[cat]) return galleryCache[cat];
+    const c = CATS[cat];
+    let items = [];
+    try{
+      const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${c.folder}`,{headers:{Accept:'application/vnd.github+json'}});
+      if(res.ok){
+        const data = await res.json();
+        if(Array.isArray(data)){
+          items = data
+            .filter(f => f.type === 'file' && IMG_RE.test(f.name))
+            .sort((a,b)=> a.name.localeCompare(b.name, undefined, {numeric:true, sensitivity:'base'}))
+            .map(f => '/' + f.path);
+        }
+      }
+    }catch(e){ /* offline or blocked — fall through to placeholders */ }
+    galleryCache[cat] = items;
+    return items;
+  }
+
+  let current = {items:[], i:0};
+  const gv = document.getElementById('galleryView');
+  const masonry = document.getElementById('masonry');
+
+  async function openGallery(cat){
+    const c = CATS[cat];
+    document.getElementById('gvTitle').childNodes[0].nodeValue = c.title + ' ';
+    document.getElementById('gvCount').textContent = '';
+    masonry.innerHTML = '<div class="gv-empty">Loading…</div>';
+    gv.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    const found = await fetchCategory(cat);
+
+    if(found.length){
+      current = {items:found, i:0};
+      document.getElementById('gvCount').textContent = '— ' + found.length + (found.length>1?' frames':' frame');
+      masonry.innerHTML = '';
+      found.forEach((src,k)=>{
+        const tile = document.createElement('figure');
+        tile.className = 'tile';
+        tile.dataset.index = k;
+        tile.innerHTML = `<img src="${src}" alt="${c.title} photograph" loading="lazy"><div class="cap"><span class="mono">${String(k+1).padStart(2,'0')}</span><span class="mono exifslot">—</span></div>`;
+        tile.addEventListener('click',()=>openLightbox(k));
+        masonry.appendChild(tile);
+        readExif(src).then(ex=>{ if(ex) tile.querySelector('.exifslot').textContent = ex; });
+      });
+    } else {
+      current = {items:[], i:0};
+      document.getElementById('gvCount').textContent = '— add photos to /' + c.folder;
+      masonry.innerHTML = '';
+      PH_RATIOS.forEach((ratio)=>{
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        tile.style.cursor = 'default';
+        tile.innerHTML = `<div class="tile-ph" style="aspect-ratio:${ratio}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 7h4l2-3h6l2 3h4v13H3z"/><circle cx="12" cy="13" r="4"/></svg>
+            <span class="mono">${c.folder}/</span></div>`;
+        masonry.appendChild(tile);
+      });
+    }
+  }
+
+  function closeGallery(){ gv.classList.remove('open'); document.body.style.overflow=''; }
+
+  const lb = document.getElementById('lb');
+  const lbImg = document.getElementById('lbImg');
+  function openLightbox(i){
+    if(!current.items.length) return;
+    current.i = i;
+    renderLb();
+    lb.classList.add('open');
+  }
+  function renderLb(){
+    const src = current.items[current.i];
+    lbImg.src = src;
+    document.getElementById('lbTitle').textContent = (current.i+1)+' / '+current.items.length;
+    const slot = document.getElementById('lbExif'); slot.textContent='';
+    readExif(src).then(ex=>{ slot.textContent = ex || ''; });
+  }
+  function step(d){ if(!current.items.length) return; current.i=(current.i+d+current.items.length)%current.items.length; renderLb(); }
+  function closeLb(){ lb.classList.remove('open'); }
+
+  document.querySelectorAll('.cover').forEach(c=>c.addEventListener('click',()=>openGallery(c.dataset.cat)));
+  document.getElementById('gvClose').addEventListener('click',closeGallery);
+  document.getElementById('lbClose').addEventListener('click',closeLb);
+  document.getElementById('lbPrev').addEventListener('click',()=>step(-1));
+  document.getElementById('lbNext').addEventListener('click',()=>step(1));
+  lb.addEventListener('click',e=>{ if(e.target===lb) closeLb(); });
+  document.addEventListener('keydown',e=>{
+    if(lb.classList.contains('open')){
+      if(e.key==='Escape') closeLb();
+      if(e.key==='ArrowLeft') step(-1);
+      if(e.key==='ArrowRight') step(1);
+    } else if(gv.classList.contains('open') && e.key==='Escape'){ closeGallery(); }
+  });
+
+  // nav + mobile menu
+  const nav = document.getElementById('nav');
+  const onScroll = ()=> nav.classList.toggle('scrolled', window.scrollY>24);
+  onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  const scrim = document.getElementById('navScrim');
+  function setMenu(open){
+    links.classList.toggle('open',open);
+    scrim.classList.toggle('open',open);
+    toggle.classList.toggle('x',open);
+    toggle.setAttribute('aria-expanded',open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  toggle.addEventListener('click',()=>setMenu(!links.classList.contains('open')));
+  scrim.addEventListener('click',()=>setMenu(false));
+  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+
+  // reveal on scroll
+  const io = new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(Math.min(i,3)*70)+'ms';io.observe(el);});
+
+  // faq accordion
+  document.querySelectorAll('.faq-q').forEach(q=>{
+    q.addEventListener('click',()=>{
+      const open = q.getAttribute('aria-expanded')==='true';
+      const a = q.nextElementSibling;
+      q.setAttribute('aria-expanded', String(!open));
+      a.style.maxHeight = open ? '0px' : a.scrollHeight+'px';
+    });
+  });
+
+  // inquiry -> Web3Forms (delivers to inbox, no backend)
+  const WEB3FORMS_KEY = 'e21790a2-f098-4c89-8f32-5c4c936f8d8d';
+  const inqForm = document.getElementById('inqForm');
+  const inqBtn = document.getElementById('inqBtn');
+  const inqStatus = document.getElementById('formStatus');
+  inqForm.addEventListener('submit',async ev=>{
+    ev.preventDefault();
+    const v = id => (document.getElementById(id).value||'').trim();
+    if(document.getElementById('botcheck').checked) return; // honeypot
+    if(!v('f-name') || !v('f-email')){
+      inqStatus.textContent = 'Please add your name and email.';
+      inqStatus.className = 'form-status err';
+      return;
+    }
+    const label = inqBtn.textContent;
+    inqBtn.disabled = true; inqBtn.textContent = 'Sending…';
+    inqStatus.textContent = ''; inqStatus.className = 'form-status';
+    const payload = {
+      access_key: WEB3FORMS_KEY,
+      subject: 'Photography inquiry — ' + (v('f-type') || 'session'),
+      from_name: v('f-name') || 'Website inquiry',
+      name: v('f-name'),
+      email: v('f-email'),
+      session_type: v('f-type'),
+      approx_date: v('f-date'),
+      message: v('f-msg')
+    };
+    try{
+      const res = await fetch('https://api.web3forms.com/submit',{
+        method:'POST',
+        headers:{'Content-Type':'application/json', Accept:'application/json'},
+        body: JSON.stringify(payload)
+      });
+      const json = await res.json();
+      if(json.success){
+        inqForm.reset();
+        inqStatus.textContent = "Thanks — your inquiry is on its way. I'll be in touch soon.";
+        inqStatus.className = 'form-status ok';
+      } else {
+        inqStatus.textContent = 'Something went wrong. Please email mtomam01@gmail.com directly.';
+        inqStatus.className = 'form-status err';
+      }
+    }catch(e){
+      inqStatus.textContent = 'Network error. Please email mtomam01@gmail.com directly.';
+      inqStatus.className = 'form-status err';
+    }finally{
+      inqBtn.disabled = false; inqBtn.textContent = label;
+    }
+  });
+</script>
+</body>
+</html>
