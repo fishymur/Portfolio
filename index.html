@@ -7,9 +7,12 @@
 <meta name="description" content="Toma Murakawa is a photographer based in Stanford, California, making graduation, portrait, sports, landscape, event, and everyday photographs on commission.">
 <meta name="theme-color" content="#F6F4EF">
 <!--
-  Type:  Overused Grotesk — github.com/RandomMaerks/Overused-Grotesk (OFL)
-         Fragment Mono    — github.com/weiweihuanghuang/fragment-mono (OFL)
+  Type:  Overused Grotesk — github.com/RandomMaerks/Overused-Grotesk (OFL), one family for everything;
+         small text is set in it too (sentence case, tabular figures) rather than in a monospace.
   Motion: motion.dev (scroll-linked frame, intro, reveals) · Paper Shaders (hero paper grain)
+  Galleries: shuffled every visit — a flat deck of photos bursts out into a scattered collage (loose justified
+  rows, so no big empty pockets); hovering a photo brings it forward in 3D while its neighbours part around it —
+  positions are solved first so pushed photos always keep a small gap.
   Everything degrades to a static, fully working page if a CDN is unavailable.
 -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -29,14 +32,12 @@
 <style>
   @font-face{font-family:'Overused Grotesk';font-weight:400;font-style:normal;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@sarap422/font-overused-grotesk@1.1.5/OverusedGrotesk-Roman.woff2) format('woff2')}
   @font-face{font-family:'Overused Grotesk';font-weight:500;font-style:normal;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@sarap422/font-overused-grotesk@1.1.5/OverusedGrotesk-Medium.woff2) format('woff2')}
-  @font-face{font-family:'Fragment Mono';font-weight:400;font-style:normal;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@fontsource/fragment-mono@5.3.0/files/fragment-mono-latin-400-normal.woff2) format('woff2')}
 
   :root{
     --paper:#F6F4EF; --paper-2:#ECE8E0; --white:#FBFAF7;
     --ink:#16181D; --ink-2:#4A4D55; --muted:#8F8A81;
     --line:rgba(22,24,29,.12); --accent:#2B3D5C;
     --sans:'Overused Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif;
-    --mono:'Fragment Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
     --pad:clamp(18px,2.4vw,36px);
     --ease:cubic-bezier(.16,1,.3,1);
   }
@@ -49,13 +50,13 @@
   ::selection{background:var(--accent);color:var(--white)}
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   .wrap{max-width:1560px;margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-  .mono{font-family:var(--mono);font-size:11px;letter-spacing:.02em;text-transform:uppercase}
+  .meta{font-size:13px;line-height:1.35;letter-spacing:-.005em;font-feature-settings:"tnum" 1}
   .js-motion .intro,.js-motion .rv{opacity:0}
   .js-motion .intro{animation:safe 0s 3.2s forwards}
   @keyframes safe{to{opacity:1}}
 
   [data-frame]{position:relative;overflow:hidden;background:var(--paper-2)}
-  .ph{display:none;position:absolute;inset:0;align-items:center;justify-content:center;gap:10px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .ph{display:none;position:absolute;inset:0;align-items:center;justify-content:center;gap:10px;font-size:12px;color:var(--muted)}
   .is-empty .ph{display:flex}
 
   /* ---------- NAV ---------- */
@@ -72,7 +73,7 @@
   .menu.open{opacity:1;visibility:visible;transition:opacity .45s,visibility 0s}
   .menu a{display:flex;justify-content:space-between;align-items:baseline;font-size:clamp(44px,13vw,80px);line-height:1.08;letter-spacing:-.045em;border-bottom:1px solid var(--line);transform:translateY(24px);opacity:0;transition:transform .7s var(--ease),opacity .5s}
   .menu.open a{transform:none;opacity:1;transition-delay:calc(.08s + var(--i)*.06s)}
-  .menu a small{font-family:var(--mono);font-size:11px;letter-spacing:.02em;color:var(--muted)}
+  .menu a small{font-size:14px;letter-spacing:0;color:var(--muted);font-feature-settings:"tnum" 1}
 
   /* ---------- HERO: frame zooms to full-bleed on scroll ---------- */
   .hero{position:relative;height:190vh}
@@ -99,7 +100,7 @@
 
   /* ---------- SECTION SHELL ---------- */
   section{position:relative}
-  .eb{display:block;color:var(--muted);margin-bottom:18px}
+  .eb{display:block;font-size:15px;color:var(--muted);margin-bottom:16px}
   .h2{font-weight:500;font-size:clamp(44px,6vw,104px);line-height:.94;letter-spacing:-.05em}
 
   /* ---------- WORK: index + still preview ---------- */
@@ -170,7 +171,7 @@
   .info a:hover{background-size:100% 1px}
   form{display:grid;gap:26px}
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
-  .field label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.02em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:2px}
   .field input,.field select,.field textarea{width:100%;background:transparent;border:0;border-bottom:1px solid rgba(22,24,29,.25);border-radius:0;color:var(--ink);font:inherit;font-size:18px;letter-spacing:-.01em;padding:10px 0;transition:border-color .3s;-webkit-appearance:none;appearance:none}
   .field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%2316181D' stroke-width='1.2'%3E%3Cpath d='m1 1 5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 2px center;padding-right:24px}
   .field textarea{resize:vertical;min-height:96px}
@@ -195,23 +196,29 @@
   .gv[hidden]{display:none}
   .gv-scroll{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain}
   .gv-bar{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:14px var(--pad);background:rgba(246,244,239,.86);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-  .gv-bar .mono{color:var(--ink-2)}
+  .gv-bar .meta{color:var(--ink-2)}
   .pill{padding:8px 16px;border:1px solid var(--line);border-radius:999px;background:var(--white);font-size:14px;transition:background .3s,color .3s,border-color .3s}
   .pill:hover{background:var(--ink);color:var(--white);border-color:var(--ink)}
   .gv-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin:0 var(--pad);padding:clamp(36px,8vh,90px) 0 clamp(22px,4vh,40px);border-bottom:1px solid var(--ink)}
   .gv-title{font-weight:500;font-size:clamp(52px,9vw,156px);line-height:.88;letter-spacing:-.055em}
-  .gv-head .mono{color:var(--ink-2)}
-  .masonry{columns:3;column-gap:18px;padding:28px var(--pad) 90px}
-  .tile{break-inside:avoid;margin-bottom:22px;cursor:zoom-in;opacity:0;transform:translateY(30px);transition:opacity .9s var(--ease),transform 1s var(--ease)}
-  .tile.in{opacity:1;transform:none}
-  .tile .ti{overflow:hidden;background:var(--paper-2)}
-  .tile img{width:100%;height:auto;transition:transform 1.2s var(--ease),opacity .5s}
-  .tile figcaption{display:flex;justify-content:space-between;gap:8px;padding-top:8px;color:var(--muted)}
-  .tile-ph{display:flex;align-items:center;justify-content:center;color:var(--muted);background:var(--paper-2)}
-  @media (hover:hover){
-    .masonry:hover .tile img{opacity:.45}
-    .masonry .tile:hover img{opacity:1;transform:scale(1.02)}
-  }
+  .gv-head .meta{color:var(--ink-2)}
+  /* 3D cluster: photos packed around the centre; hovering one brings it forward, neighbours are pushed away and tilt back */
+  .gv-scroll{overflow-x:hidden}
+  .masonry{padding:30px var(--pad) 110px}
+  .cluster{position:relative;margin:0 auto;--mx:0;--my:0}
+  .ct{position:absolute;--px:0px;--py:0px;--pz:0px;--ez:-260px;--s:1;--rx:0deg;--ry:0deg;--rot:0deg;--d:0;
+    opacity:0;cursor:zoom-in;z-index:1;will-change:transform;
+    transform:translate(calc(var(--px) + var(--mx) * var(--d) * 16px),calc(var(--py) + var(--my) * var(--d) * 12px)) perspective(1200px) translateZ(calc(var(--pz) + var(--ez))) rotateX(calc(var(--rx) + var(--my) * -3deg)) rotateY(calc(var(--ry) + var(--mx) * 4deg)) rotate(var(--rot)) scale(var(--s));
+    transition:transform .9s cubic-bezier(.22,1,.36,1),opacity .7s ease}
+  .ct.in{opacity:1;--ez:0px}
+  .ct.is-focus{z-index:10}
+  .ct .ci{position:absolute;inset:0;overflow:hidden;background:var(--paper-2);box-shadow:0 12px 30px -20px rgba(22,24,29,.4);transition:box-shadow .7s var(--ease)}
+  .ct.is-focus .ci{box-shadow:0 46px 90px -34px rgba(22,24,29,.6)}
+  .ct img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s ease}
+  .ct img.ok{opacity:1}
+  .ct:focus-visible{outline:none}
+  .ct:focus-visible .ci{outline:2px solid var(--accent);outline-offset:4px}
+  .tile-ph{display:flex;align-items:center;justify-content:center;color:var(--muted)}
   .shutter{position:fixed;inset:0;z-index:95;pointer-events:none}
   .shutter i{position:absolute;left:0;right:0;height:50.5%;background:var(--ink);transform:scaleY(0)}
   .shutter .s-top{top:0;transform-origin:top}
@@ -220,7 +227,13 @@
   /* ---------- LIGHTBOX ---------- */
   .lb{position:fixed;inset:0;z-index:90;background:rgba(246,244,239,.98);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .4s,visibility 0s .4s}
   .lb.open{opacity:1;visibility:visible;transition:opacity .4s,visibility 0s}
-  .lb img{max-width:90vw;max-height:76vh;object-fit:contain;box-shadow:0 30px 80px -30px rgba(22,24,29,.45);user-select:none;-webkit-user-drag:none}
+  .lb-fig{display:flex;flex-direction:column;align-items:center;gap:16px;margin:0}
+  .lb img{max-width:90vw;max-height:72vh;object-fit:contain;box-shadow:0 30px 80px -30px rgba(22,24,29,.45);user-select:none;-webkit-user-drag:none}
+  .lb-shot{display:flex;flex-direction:column;align-items:center;gap:4px;min-height:2.8em;text-align:center;color:var(--ink-2);font-feature-settings:"tnum" 1;opacity:0;transition:opacity .45s ease}
+  .lb-shot.on{opacity:1}
+  .lb-cam{font-size:14px;color:var(--ink);letter-spacing:-.01em}
+  .lb-cam:empty{display:none}
+  .lb-set{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 18px;font-size:13px}
   .lb-top,.lb-bot{position:absolute;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px var(--pad);color:var(--ink-2)}
   .lb-top{top:0}.lb-bot{bottom:0}
   .lb-nav{display:flex;gap:8px}
@@ -232,7 +245,6 @@
     .nav-toggle{display:block}
     .about-grid,.faq-grid,.contact-grid{grid-template-columns:1fr}
     .portrait{max-width:520px}
-    .masonry{columns:2}
   }
   @media (hover:none),(max-width:960px){
     .work-grid{grid-template-columns:1fr}
@@ -259,8 +271,7 @@
     .faq-q{grid-template-columns:30px 1fr 28px}
     .faq-a p{padding-left:42px}
     .info div{grid-template-columns:96px 1fr}
-    .masonry{columns:1}
-    .hero-bottom .hb-l{display:none}
+      .hero-bottom .hb-l{display:none}
     .hero-bottom{justify-content:center}
     .foot-row{grid-template-columns:1fr;text-align:left}
     .foot-row .mid{text-align:left}
@@ -268,7 +279,7 @@
   }
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
-    .tile{opacity:1;transform:none}
+    .ct{opacity:1}
   }
 </style>
 </head>
@@ -279,8 +290,8 @@
   <nav class="nav-links" aria-label="Primary">
     <a href="#work">Work</a><a href="#about">About</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
   </nav>
-  <span class="clock mono" id="clock">Stanford, CA</span>
-  <button class="nav-toggle mono" id="navToggle" aria-expanded="false" aria-controls="menu"><span>Menu</span></button>
+  <span class="clock meta" id="clock">Stanford, CA</span>
+  <button class="nav-toggle meta" id="navToggle" aria-expanded="false" aria-controls="menu"><span>Menu</span></button>
 </header>
 <div class="menu" id="menu" aria-hidden="true">
   <a href="#work" style="--i:0">Work <small>01</small></a>
@@ -296,20 +307,20 @@
     <div class="hero-bg"></div>
     <div class="shader" id="heroShader" aria-hidden="true"></div>
     <div class="hero-inner">
-      <div class="hero-fade"><p class="kicker mono intro">Stanford, California — Available on commission</p></div>
+      <div class="hero-fade"><p class="kicker meta intro">Stanford, California — Available on commission</p></div>
       <div class="frame intro" id="heroFrame" data-frame>
         <img src="hero.jpg" alt="Photograph by Toma Murakawa" onerror="imgFail(this)">
         <div class="ph">hero.jpg</div>
         <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
-        <span class="fm fm-tl mono">Stanford, CA</span>
-        <span class="fm fm-br mono">f/2 · 1/250 · ISO 100</span>
+        <span class="fm fm-tl meta">Stanford, CA</span>
+        <span class="fm fm-br meta">f/2 · 1/250 · ISO 100</span>
       </div>
       <div class="hero-fade" style="display:flex;flex-direction:column;align-items:center;gap:clamp(12px,2vh,20px)">
         <h1 class="title intro" aria-label="Preserving the Moment."><span class="t1" aria-hidden="true">Preserving</span> <span class="t2" aria-hidden="true">the Moment.</span></h1>
-        <ul class="credits mono intro"><li>Graduations</li><li>Portraits</li><li>Sports</li><li>Landscape</li><li>Events</li><li>Life</li></ul>
+        <ul class="credits meta intro"><li>Graduations</li><li>Portraits</li><li>Sports</li><li>Landscape</li><li>Events</li><li>Life</li></ul>
       </div>
     </div>
-    <div class="hero-bottom mono hero-fade"><span class="hb-l intro">Photographs since 2021</span><span class="intro">Scroll ↓</span></div>
+    <div class="hero-bottom meta hero-fade"><span class="hb-l intro">Photographs since 2021</span><span class="intro">Scroll ↓</span></div>
   </div>
 </section>
 
@@ -317,46 +328,46 @@
 <section class="work" id="work">
   <div class="wrap">
     <div class="sec-head">
-      <div><span class="eb mono rv">(01) Selected work</span><h2 class="h2 rv">Six mediums.</h2></div>
+      <div><span class="eb meta rv">Selected work</span><h2 class="h2 rv">Six mediums.</h2></div>
       <p class="rv">Each category opens a full gallery — the complete set, shot on location across the Bay Area and beyond.</p>
     </div>
     <div class="work-grid">
       <ol class="index" id="index">
         <li class="rv" data-d="0"><button class="row" type="button" data-cat="grad">
           <span class="row-thumb" data-frame><img src="cover-graduations.jpg" alt="" loading="lazy" onerror="imgFail(this)"></span>
-          <span class="row-n mono">01</span>
+          <span class="row-n meta">01</span>
           <span class="row-main"><span class="row-title">Graduations</span><span class="row-more"><span><span class="row-sub">Caps &amp; gowns</span></span></span></span>
-          <span class="row-go mono">View →</span>
+          <span class="row-go meta">View →</span>
         </button></li>
         <li class="rv" data-d=".06"><button class="row" type="button" data-cat="portrait">
           <span class="row-thumb" data-frame><img src="cover-portraits.jpg" alt="" loading="lazy" onerror="imgFail(this)"></span>
-          <span class="row-n mono">02</span>
+          <span class="row-n meta">02</span>
           <span class="row-main"><span class="row-title">Portraits</span><span class="row-more"><span><span class="row-sub">People</span></span></span></span>
-          <span class="row-go mono">View →</span>
+          <span class="row-go meta">View →</span>
         </button></li>
         <li class="rv" data-d=".12"><button class="row" type="button" data-cat="sport">
           <span class="row-thumb" data-frame><img src="cover-sport.jpg" alt="" loading="lazy" onerror="imgFail(this)"></span>
-          <span class="row-n mono">03</span>
+          <span class="row-n meta">03</span>
           <span class="row-main"><span class="row-title">Sports</span><span class="row-more"><span><span class="row-sub">Motion</span></span></span></span>
-          <span class="row-go mono">View →</span>
+          <span class="row-go meta">View →</span>
         </button></li>
         <li class="rv" data-d=".18"><button class="row" type="button" data-cat="land">
           <span class="row-thumb" data-frame><img src="cover-landscape.jpg" alt="" loading="lazy" onerror="imgFail(this)"></span>
-          <span class="row-n mono">04</span>
+          <span class="row-n meta">04</span>
           <span class="row-main"><span class="row-title">Landscape</span><span class="row-more"><span><span class="row-sub">Place</span></span></span></span>
-          <span class="row-go mono">View →</span>
+          <span class="row-go meta">View →</span>
         </button></li>
         <li class="rv" data-d=".24"><button class="row" type="button" data-cat="events">
           <span class="row-thumb" data-frame><img src="cover-events.jpg" alt="" loading="lazy" onerror="imgFail(this)"></span>
-          <span class="row-n mono">05</span>
+          <span class="row-n meta">05</span>
           <span class="row-main"><span class="row-title">Events</span><span class="row-more"><span><span class="row-sub">Occasions</span></span></span></span>
-          <span class="row-go mono">View →</span>
+          <span class="row-go meta">View →</span>
         </button></li>
         <li class="rv" data-d=".30"><button class="row" type="button" data-cat="life">
           <span class="row-thumb" data-frame><img src="cover-life.jpg" alt="" loading="lazy" onerror="imgFail(this)"></span>
-          <span class="row-n mono">06</span>
+          <span class="row-n meta">06</span>
           <span class="row-main"><span class="row-title">Life</span><span class="row-more"><span><span class="row-sub">Everyday</span></span></span></span>
-          <span class="row-go mono">View →</span>
+          <span class="row-go meta">View →</span>
         </button></li>
       </ol>
       <aside class="still rv" data-d=".1">
@@ -368,7 +379,7 @@
           <img src="cover-events.jpg" alt="Event photography" onerror="imgFail(this)">
           <img src="cover-life.jpg" alt="Everyday life photography" onerror="imgFail(this)">
         </div>
-        <div class="still-cap mono"><span id="stillName">Graduations</span><span id="stillNum">01 / 06</span></div>
+        <div class="still-cap meta"><span id="stillName">Graduations</span><span id="stillNum">01 / 06</span></div>
       </aside>
     </div>
   </div>
@@ -382,15 +393,15 @@
       <div class="ph">your-portrait.jpg</div>
     </figure>
     <div>
-      <span class="eb mono rv">(02) About</span>
+      <span class="eb meta rv">About</span>
       <h2 class="h2 rv">Student athlete and photographer.</h2>
       <p class="lead rv">I'm Toma — a photographer based in Stanford, CA, working with students, event organizers, and athletes across the Bay Area.</p>
       <p class="body rv">While I primarily work with portraits, I am open to shooting anything. Feel free to look through my work and contact me with any questions or ideas.</p>
       <p class="body rv">Every gallery here was made on commission. If your day is coming up, I'd love to be the one holding the camera.</p>
       <dl class="cred rv">
-        <div><dt class="mono">Based in</dt><dd>Stanford, CA</dd></div>
-        <div><dt class="mono">Working since</dt><dd>2021</dd></div>
-        <div><dt class="mono">Turnaround</dt><dd>About two weeks</dd></div>
+        <div><dt class="meta">Based in</dt><dd>Stanford, CA</dd></div>
+        <div><dt class="meta">Working since</dt><dd>2021</dd></div>
+        <div><dt class="meta">Turnaround</dt><dd>About two weeks</dd></div>
       </dl>
     </div>
   </div>
@@ -399,22 +410,22 @@
 <!-- FAQ -->
 <section class="faq" id="faq">
   <div class="wrap faq-grid">
-    <div><span class="eb mono rv">(03) Good to know</span><h2 class="h2 rv">A few quick answers.</h2></div>
+    <div><span class="eb meta rv">Good to know</span><h2 class="h2 rv">A few quick answers.</h2></div>
     <div class="faq-list rv">
       <div class="faq-item">
-        <button class="faq-q" aria-expanded="false"><span class="mono n">01</span><span class="q">How do I book a session?</span><span class="faq-ico" aria-hidden="true"></span></button>
+        <button class="faq-q" aria-expanded="false"><span class="meta n">01</span><span class="q">How do I book a session?</span><span class="faq-ico" aria-hidden="true"></span></button>
         <div class="faq-a"><div><p>Send a note through the contact form below, or email me directly. I'll get back to you with availability and the next steps.</p></div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" aria-expanded="false"><span class="mono n">02</span><span class="q">Where are you based, and do you travel?</span><span class="faq-ico" aria-hidden="true"></span></button>
+        <button class="faq-q" aria-expanded="false"><span class="meta n">02</span><span class="q">Where are you based, and do you travel?</span><span class="faq-ico" aria-hidden="true"></span></button>
         <div class="faq-a"><div><p>I'm based in Stanford and shoot throughout the Bay Area. For projects farther out, just ask — travel is usually no problem.</p></div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" aria-expanded="false"><span class="mono n">03</span><span class="q">When will I get my photos?</span><span class="faq-ico" aria-hidden="true"></span></button>
+        <button class="faq-q" aria-expanded="false"><span class="meta n">03</span><span class="q">When will I get my photos?</span><span class="faq-ico" aria-hidden="true"></span></button>
         <div class="faq-a"><div><p>Edited galleries are typically ready within about two weeks, with a few preview frames sooner.</p></div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" aria-expanded="false"><span class="mono n">04</span><span class="q">What is your pricing?</span><span class="faq-ico" aria-hidden="true"></span></button>
+        <button class="faq-q" aria-expanded="false"><span class="meta n">04</span><span class="q">What is your pricing?</span><span class="faq-ico" aria-hidden="true"></span></button>
         <div class="faq-a"><div><p>Pricing is determined on distance, number of people in the shoot, amount of time, and a few other factors. Contact me for more information!</p></div></div>
       </div>
     </div>
@@ -424,15 +435,15 @@
 <!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="wrap">
-    <span class="eb mono rv">(04) Contact</span>
+    <span class="eb meta rv">Contact</span>
     <h2 class="h2 rv">Let's plan your shoot.</h2>
     <div class="contact-grid">
       <div class="rv">
         <p class="lead">Tell me a little about what you're after and roughly when — I'll get back to you with availability and the next steps.</p>
         <dl class="info">
-          <div><dt class="mono">Email</dt><dd><a href="mailto:mtomam01@gmail.com">mtomam01@gmail.com</a></dd></div>
-          <div><dt class="mono">Instagram</dt><dd><a href="https://instagram.com/murakawatoma" target="_blank" rel="noopener">@murakawatoma</a></dd></div>
-          <div><dt class="mono">Based in</dt><dd>Stanford, California</dd></div>
+          <div><dt class="meta">Email</dt><dd><a href="mailto:mtomam01@gmail.com">mtomam01@gmail.com</a></dd></div>
+          <div><dt class="meta">Instagram</dt><dd><a href="https://instagram.com/murakawatoma" target="_blank" rel="noopener">@murakawatoma</a></dd></div>
+          <div><dt class="meta">Based in</dt><dd>Stanford, California</dd></div>
         </dl>
       </div>
       <form id="inqForm" class="rv" novalidate>
@@ -461,7 +472,7 @@
 </main>
 
 <footer class="foot">
-  <div class="wrap foot-row mono">
+  <div class="wrap foot-row meta">
     <span>© <span id="yr"></span> Toma Murakawa</span>
     <span class="mid">Stanford, California</span>
     <nav class="foot-links" aria-label="Footer">
@@ -475,8 +486,8 @@
 <!-- GALLERY -->
 <div class="gv" id="galleryView" role="dialog" aria-modal="true" aria-labelledby="gvTitle" hidden>
   <div class="gv-scroll" id="gvScroll">
-    <div class="gv-bar"><button class="pill" id="gvClose">← Back</button><span class="mono" id="gvCount"></span></div>
-    <header class="gv-head"><h2 class="gv-title" id="gvTitle">Gallery</h2><span class="mono" id="gvNum"></span></header>
+    <div class="gv-bar"><button class="pill" id="gvClose">← Back</button><span class="meta" id="gvCount"></span></div>
+    <header class="gv-head"><h2 class="gv-title" id="gvTitle">Gallery</h2><span class="meta" id="gvNum"></span></header>
     <div class="masonry" id="masonry"></div>
   </div>
 </div>
@@ -484,9 +495,12 @@
 
 <!-- LIGHTBOX -->
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
-  <div class="lb-top"><span class="mono" id="lbTitle"></span><button class="pill" id="lbClose">Close</button></div>
-  <img id="lbImg" src="" alt="">
-  <div class="lb-bot"><span class="mono" id="lbExif"></span><span class="lb-nav"><button class="pill" id="lbPrev" aria-label="Previous">←</button><button class="pill" id="lbNext" aria-label="Next">→</button></span></div>
+  <div class="lb-top"><span class="meta" id="lbTitle"></span><button class="pill" id="lbClose">Close</button></div>
+  <figure class="lb-fig">
+    <img id="lbImg" src="" alt="">
+    <figcaption class="lb-shot" id="lbShot" aria-live="polite"><span class="lb-cam" id="lbCam"></span><span class="lb-set" id="lbSet"></span></figcaption>
+  </figure>
+  <div class="lb-bot"><span></span><span class="lb-nav"><button class="pill" id="lbPrev" aria-label="Previous">←</button><button class="pill" id="lbNext" aria-label="Next">→</button></span></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/lite.umd.js"></script>
@@ -515,18 +529,33 @@
   const galleryCache = {};
   const pad2 = n => String(n).padStart(2, '0');
 
-  async function readExif(src){
-    if (typeof exifr === 'undefined') return '';
-    try {
-      const d = await exifr.parse(src, ['FNumber','ExposureTime','ISO','FocalLength']);
-      if (!d) return '';
-      const p = [];
-      if (d.FocalLength) p.push(Math.round(d.FocalLength) + 'mm');
-      if (d.FNumber) p.push('f/' + (+d.FNumber).toFixed(1).replace(/\.0$/, ''));
-      if (d.ExposureTime) p.push(d.ExposureTime >= 1 ? d.ExposureTime + 's' : '1/' + Math.round(1 / d.ExposureTime));
-      if (d.ISO) p.push('ISO ' + d.ISO);
-      return p.join(' · ');
-    } catch (e) { return ''; }
+  // Camera, lens and exposure from the photo's EXIF (read from the file header only; cached per photo)
+  const shotCache = new Map();
+  function readShot(src){
+    if (shotCache.has(src)) return shotCache.get(src);
+    const job = (async () => {
+      if (typeof exifr === 'undefined') return null;
+      try {
+        // object-form options: the "lite" exifr build can't take a plain array of tag names (it throws)
+        const d = await exifr.parse(src, {ifd0: ['Make', 'Model'], exif: ['LensModel', 'FNumber', 'ExposureTime', 'ISO', 'FocalLength'],
+          gps: false, interop: false, ifd1: false, xmp: false, icc: false, iptc: false, jfif: false});
+        if (!d) return null;
+        let brand = d.Make ? String(d.Make).trim().split(/\s+/)[0] : '';
+        if (brand.length > 3) brand = brand[0].toUpperCase() + brand.slice(1).toLowerCase();   // "NIKON CORPORATION" → "Nikon"
+        let model = d.Model ? String(d.Model).trim() : '';
+        if (brand && model.toLowerCase().startsWith(brand.toLowerCase())) model = model.slice(brand.length).trim();
+        const camera = [brand, model].filter(Boolean).join(' ');
+        const lens = d.LensModel ? String(d.LensModel).trim() : '';
+        const set = [];
+        if (d.FocalLength) set.push(Math.round(d.FocalLength) + 'mm');
+        if (d.FNumber) set.push('f/' + (+d.FNumber).toFixed(1).replace(/\.0$/, ''));
+        if (d.ExposureTime) set.push(d.ExposureTime >= 1 ? +(+d.ExposureTime).toFixed(1) + 's' : '1/' + Math.round(1 / d.ExposureTime) + 's');
+        if (d.ISO) set.push('ISO ' + d.ISO);
+        return camera || lens || set.length ? {camera, lens, set} : null;
+      } catch (e) { return null; }
+    })();
+    shotCache.set(src, job);
+    return job;
   }
   async function fetchCategory(cat){
     if (galleryCache[cat]) return galleryCache[cat];
@@ -546,12 +575,12 @@
   /* ================= ENV ================= */
   const M = window.Motion;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const MOTION = !!M && !reduce;
   if (!MOTION) document.documentElement.classList.remove('js-motion');
   const EASE = [0.16, 1, 0.3, 1];
   const SHUT = [0.7, 0, 0.3, 1];
   const lock = on => { document.documentElement.style.overflow = on ? 'hidden' : ''; };
+  const nextFrame = cb => document.hidden ? setTimeout(cb, 30) : requestAnimationFrame(cb);
 
   /* ================= CLOCK ================= */
   try {
@@ -656,12 +685,235 @@
   index.addEventListener('focusout', e => { if (!index.contains(e.relatedTarget)) setActive(-1); });
   $('#stillFrame').addEventListener('click', () => rows[shown].click());
 
-  /* ================= GALLERY (shutter transition) ================= */
+  /* ================= GALLERY: shuffled 3D cluster ================= */
   let current = {items: [], i: 0}, lastBtn = null;
   const gv = $('#galleryView'), gvScroll = $('#gvScroll'), gvTitle = $('#gvTitle'), gvCount = $('#gvCount'), gvNum = $('#gvNum'), masonry = $('#masonry');
   const camSvg = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 7h4l2-3h6l2 3h4v13H3z"/><circle cx="12" cy="13" r="4"/></svg>';
-  const tileIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); tileIO.unobserve(e.target); } }), {root: gvScroll});
-  const addTile = (t, k) => { t.style.transitionDelay = (k < 6 ? 200 + k * 70 : 0) + 'ms'; masonry.appendChild(t); tileIO.observe(t); };
+  const FOCUS = 1.5;                       // how much larger the hovered photo appears
+  const Z_FOCUS = 70, S_FOCUS = FOCUS / (1200 / (1200 - Z_FOCUS));   // scale + depth together ≈ FOCUS
+  const rand = (a, b) => a + Math.random() * (b - a);
+  const shuffle = arr => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  let cl = null, packPending = false;
+
+  // Scattered collage: photos are laid in loose justified rows (so there are no big empty pockets), then each one
+  // is shrunk a little inside its cell, nudged and tilted at random so the whole thing reads as scattered prints.
+  // Now and then two landscape photos share one cell, stacked. Row breaks are chosen so the last row isn't stranded.
+  function packCluster(){
+    packPending = false;
+    if (!cl || gv.hidden) return;
+    const cs = getComputedStyle(masonry);
+    const W = masonry.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    if (W <= 0) return;
+    cl.W = W;
+    const gap = W < 600 ? 12 : 18, H0 = W < 600 ? 175 : W < 1000 ? 245 : Math.min(360, W / 3.9);   // target row height (photo size)
+    const T = cl.tiles;
+    if (!cl.slots) {                                    // decided once per visit, so a resize doesn't reshuffle
+      cl.slots = [];
+      for (let k = 0; k < T.length; k++) {
+        const x = T[k], y = T[k + 1];
+        if (y && x.r > 1.25 && y.r > 1.25 && Math.random() < .3) { cl.slots.push([x, y]); k++; }
+        else cl.slots.push([x]);
+      }
+      cl.rowVar = Array.from({length: T.length + 2}, () => rand(.86, 1.14));
+      T.forEach(t => { t.k = rand(.86, 1); t.jx = rand(-1, 1); t.jy = rand(-1, 1); });
+    }
+    const slotR = s => s.length === 1 ? s[0].r : 1 / (1 / s[0].r + 1 / s[1].r);
+    const build = base => {
+      const rows = []; let row = [], sum = 0, ri = 0;
+      for (const s of cl.slots) {
+        row.push(s); sum += slotR(s);
+        if (sum * base * cl.rowVar[ri] + gap * (row.length - 1) >= W) { rows.push({row, sum, full: true}); row = []; sum = 0; ri++; }
+      }
+      if (row.length) rows.push({row, sum, full: false, fill: (sum * base * cl.rowVar[ri] + gap * (row.length - 1)) / W});
+      return rows;
+    };
+    let rows = null, bestScore = Infinity;
+    for (let f = .8; f <= 1.26; f += .03) {             // pick the row height that leaves the fullest last row
+      const r = build(H0 * f), last = r[r.length - 1];
+      const score = Math.abs(1 - f) * .6 + (last.full ? 0 : (1 - last.fill) * 2) + (r.length > 1 && !last.full && last.row.length === 1 ? .4 : 0);
+      if (score < bestScore) { bestScore = score; rows = r; }
+    }
+    const pad = 30;
+    let y = pad;
+    const place = (t, x, top, cw, ch) => {
+      let w = cw * t.k, h = w / t.r;
+      if (h > ch) { h = ch * t.k; w = h * t.r; }
+      const sx = cw - w, sy = ch - h;
+      t.w = w; t.h = h;
+      t.cx = x + cw / 2 + t.jx * sx * .45;
+      t.cy = top + ch / 2 + t.jy * sy * .45;
+    };
+    for (const R of rows) {
+      let h = (W - gap * (R.row.length - 1)) / R.sum;
+      if (!R.full) h = Math.min(h, H0 * 1.05);
+      let x = (W - (R.sum * h + gap * (R.row.length - 1))) / 2;
+      for (const sl of R.row) {
+        const cw = slotR(sl) * h;
+        if (sl.length === 1) place(sl[0], x, y, cw, h);
+        else {
+          const [p, q] = sl, hp = (h - gap) * (1 / p.r) / (1 / p.r + 1 / q.r);
+          place(p, x, y, cw, hp); place(q, x, y + hp + gap, cw, h - gap - hp);
+        }
+        x += cw + gap;
+      }
+      y += h + gap;
+    }
+    cl.el.style.width = W + 'px';
+    cl.el.style.height = (y - gap + pad) + 'px';
+    T.forEach(t => Object.assign(t.el.style, {left: (t.cx - t.w / 2) + 'px', top: (t.cy - t.h / 2) + 'px', width: t.w + 'px', height: t.h + 'px'}));
+    if (cl.focus != null && cl.ready) focusTile(cl.focus);
+  }
+  const schedulePack = () => { if (!packPending) { packPending = true; nextFrame(packCluster); } };
+  let lastW = 0;
+  addEventListener('resize', () => {
+    if (!cl || !cl.ready) return;
+    const w = masonry.clientWidth;
+    if (w !== lastW) { lastW = w; schedulePack(); }
+  });
+
+  function setV(t, px, py, pz, s, rx, ry, rot){
+    const st = t.el.style;
+    st.setProperty('--px', px.toFixed(1) + 'px'); st.setProperty('--py', py.toFixed(1) + 'px'); st.setProperty('--pz', pz.toFixed(1) + 'px');
+    st.setProperty('--s', s.toFixed(3)); st.setProperty('--rx', rx.toFixed(2) + 'deg'); st.setProperty('--ry', ry.toFixed(2) + 'deg'); st.setProperty('--rot', rot + 'deg');
+  }
+  // Hovered photo comes forward; the others part around it, recede and tilt back. Before anything moves, the
+  // final positions are solved so every photo keeps a small margin — pushed photos never overlap.
+  const MARGIN = W => W < 600 ? 4 : 6;      // space kept on every side of a photo while others are pushed (rest gap is 12 / 18px)
+  // Where everything goes when photo i is hovered at scale S. Photos the grown one touches slide straight away
+  // from it, just far enough to keep the margin; anything they then bump into is nudged the same way, and so on
+  // outward in a short wave. If the photo is boxed in, it simply grows a little less — nothing ever overlaps.
+  function layoutFor(i, S){
+    const T = cl.tiles, a = T[i], W = cl.W, m = MARGIN(W), grow = (S - 1) / Math.max(FOCUS - 1, .01);
+    const P = T.map(t => ({x: t.cx, y: t.cy, w: t.w, h: t.h, ew: t.w / 2 + m, eh: t.h / 2 + m, lvl: 0, f: 0, sc: 1}));
+    const shrink = (n, sc) => { if (sc < n.sc) { n.sc = sc; n.ew = n.w * sc / 2 + m; n.eh = n.h * sc / 2 + m; } };   // neighbours give up a little size to make room
+    const F = P[i];
+    F.ew = a.w * S / 2 + m; F.eh = a.h * S / 2 + m; F.lvl = -1;
+    const clampX = n => { if (n.ew * 2 >= W) n.x = W / 2; else n.x = Math.min(W - n.ew, Math.max(n.ew, n.x)); if (n.y < n.eh) n.y = n.eh; };
+    clampX(F);
+    const hit = (p, q) => p.ew + q.ew - Math.abs(q.x - p.x) > .01 && p.eh + q.eh - Math.abs(q.y - p.y) > .01;
+    const away = (from, n, extra) => {                         // slide n straight away from `from` until clear (+extra)
+      let dx = n.x - from.x, dy = n.y - from.y, d = Math.hypot(dx, dy);
+      if (d < .01) { dx = 0; dy = 1; d = 1; }
+      const ux = dx / d, uy = dy / d, sw = from.ew + n.ew, sh = from.eh + n.eh;
+      const need = Math.min(Math.abs(ux) > 1e-6 ? sw / Math.abs(ux) : Infinity, Math.abs(uy) > 1e-6 ? sh / Math.abs(uy) : Infinity) - d;
+      const mv = Math.max(0, need) + extra;
+      if (mv <= .01) return false;
+      n.x += ux * mv; n.y += uy * mv; clampX(n);
+      return true;
+    };
+    // wave 1: the grown photo's neighbours (plus a soft parting for the ones right next to it)
+    const reach = Math.max(a.w, a.h) * 1.3;
+    let wave = [];
+    P.forEach((n, j) => {
+      if (j === i) return;
+      const f = Math.max(0, 1 - Math.max(0, Math.hypot(n.x - F.x, n.y - F.y) - Math.hypot(F.ew, F.eh) * .7) / reach);
+      if (hit(F, n)) shrink(n, 1 - .16 * grow);
+      if (away(F, n, hit(F, n) ? 10 * f * grow : 0)) { n.lvl = 1; n.f = f; wave.push(n); }
+    });
+    // following waves: whoever the moved photos now bump into
+    for (let w = 2; w <= 10 && wave.length; w++) {
+      const next = [];
+      for (const p of wave) for (const n of P) {
+        if (n === p || n === F || !hit(p, n)) continue;
+        if (w === 2) shrink(n, 1 - .08 * grow);
+        if (away(p, n, 0)) { if (!n.lvl) { n.lvl = w; n.f = Math.max(0, .5 - w * .06); } if (!next.includes(n)) next.push(n); }
+      }
+      wave = next;
+    }
+    // a few quick passes to separate moved photos that ended up shoulder to shoulder
+    const moved = P.filter(n => n.lvl);
+    for (let it = 0; it < 8; it++) {
+      let any = false;
+      for (const p of moved) for (const q of P) {
+        if (p === q || !hit(p, q)) continue;
+        if (q === F || (!q.lvl)) { any = away(q, p, 0) || any; }       // the moved one yields
+        else any = away(p, q, 0) || any;
+      }
+      if (!any) break;
+    }
+    // valid only if every moved photo still has its margin
+    for (const p of moved) for (const q of P) if (p !== q && p.ew + q.ew - Math.abs(q.x - p.x) > .5 && p.eh + q.eh - Math.abs(q.y - p.y) > .5) return null;
+    return P;
+  }
+  function solveFocus(i){
+    const a = cl.tiles[i];
+    const Smax = Math.max(1, Math.min(FOCUS, (cl.W * .62) / a.w));   // a hovered photo never swallows the whole row
+    let N = layoutFor(i, Smax), S = Smax;
+    if (!N) {                                                         // boxed in: largest size that still fits
+      let lo = 1, hi = Smax; S = 1;
+      N = layoutFor(i, 1) || cl.tiles.map(t => ({x: t.cx, y: t.cy, lvl: 0, f: 0, sc: 1}));   // worst case: just lift it, no growth
+      for (let k = 0; k < 7; k++) { const mid = (lo + hi) / 2, r = layoutFor(i, mid); if (r) { lo = mid; N = r; S = mid; } else hi = mid; }
+    }
+    return {N, S};
+  }
+  function focusTile(i){
+    if (!cl || !cl.ready) return;
+    cl.focus = i;
+    const {N, S} = solveFocus(i);
+    const tilt = reduce ? 0 : 1;
+    cl.tiles.forEach((t, j) => {
+      const n = N[j], dx = n.x - t.cx, dy = n.y - t.cy;
+      if (j === i) { t.el.classList.add('is-focus'); setV(t, dx, dy, Z_FOCUS, S / (1200 / (1200 - Z_FOCUS)), 0, 0, 0); return; }
+      t.el.classList.remove('is-focus');
+      const d = Math.hypot(dx, dy), f = n.lvl ? Math.min(1, Math.max(n.f, d / 90)) : 0, ux = d ? dx / d : 0, uy = d ? dy / d : 0;
+      const z = -45 * f * tilt, sc = (n.sc || 1) / (1200 / (1200 - z));            // depth already shrinks it a bit — keep the solved size
+      setV(t, dx, dy, z, sc, uy * 6 * f * tilt, -ux * 8 * f * tilt, t.rot);
+    });
+  }
+  function resetCluster(){ if (cl) { cl.focus = null; cl.tiles.forEach(t => { t.el.classList.remove('is-focus'); setV(t, 0, 0, 0, 1, 0, 0, t.rot); }); } }
+
+  // subtle depth parallax: each photo sits at its own depth and drifts with the cursor
+  let mxv = 0, myv = 0, mxPending = false;
+  if (!reduce) gvScroll.addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse' || !cl) return;
+    mxv = e.clientX / innerWidth * 2 - 1; myv = e.clientY / innerHeight * 2 - 1;
+    if (!mxPending) { mxPending = true; nextFrame(() => { mxPending = false; if (cl) { cl.el.style.setProperty('--mx', mxv.toFixed(3)); cl.el.style.setProperty('--my', myv.toFixed(3)); } }); }
+  });
+
+  function buildCluster(list, title, isPh){
+    const el = document.createElement('div');
+    el.className = 'cluster';
+    const tiles = list.map((it, k) => {
+      const f = document.createElement(isPh ? 'div' : 'figure');
+      f.className = 'ct';
+      const t = {el: f, r: it.r || 1.5, v: Math.random() < .2 ? rand(1.22, 1.42) : rand(.8, 1.12),
+                 rot: +rand(-2.6, 2.6).toFixed(2), phase: rand(0, Math.PI * 2), d: +rand(-1, 1).toFixed(2)};
+      f.style.setProperty('--rot', t.rot + 'deg'); f.style.setProperty('--d', t.d);
+      if (isPh) { f.innerHTML = `<div class="ci tile-ph">${camSvg}</div>`; f.style.cursor = 'default'; }
+      else {
+        f.dataset.index = k; f.tabIndex = 0;
+        f.innerHTML = `<div class="ci"><img src="${it.src}" alt="${title} photograph ${k + 1}"></div>`;
+        const img = t.img = f.querySelector('img');
+        const ok = () => {
+          img.classList.add('ok');
+          if (img.naturalWidth && img.naturalHeight) {
+            const r = img.naturalWidth / img.naturalHeight;
+            if (Math.abs(r - t.r) > .02) { t.r = r; if (cl && cl.ready) schedulePack(); }
+          }
+        };
+        if (img.complete && img.naturalWidth) ok();
+        else { img.addEventListener('load', ok, {once: true}); img.addEventListener('error', () => { img.dataset.err = 1; }, {once: true}); }
+        f.addEventListener('click', () => openLightbox(k));
+        f.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(k); } });
+        f.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse' || e.pointerType === 'pen') focusTile(k); });
+        f.addEventListener('focus', () => { if (f.matches(':focus-visible')) focusTile(k); });
+      }
+      el.appendChild(f);
+      return t;
+    });
+    el.addEventListener('pointerleave', resetCluster);
+    el.addEventListener('focusout', e => { if (!el.contains(e.relatedTarget)) resetCluster(); });
+    return {el, tiles, ready: false};
+  }
+
+  // wait until every photo's dimensions are known (header only, not the full download), max 3.5s
+  const waitDims = imgs => new Promise(res => {
+    const t0 = performance.now();
+    (function poll(){
+      if (imgs.every(im => im.naturalWidth > 0 || im.dataset.err) || performance.now() - t0 > 3500) res();
+      else setTimeout(poll, 60);
+    })();
+  });
 
   async function shutter(mid){
     if (!MOTION) { mid(); return; }
@@ -677,36 +929,66 @@
       gvTitle.textContent = c.title;
       gvNum.textContent = pad2(ORDER.indexOf(cat) + 1) + ' / 06';
       gvCount.textContent = 'Loading…';
-      masonry.innerHTML = '';
+      cl = null; masonry.innerHTML = '';
       gv.hidden = false; gvScroll.scrollTop = 0; lock(true);
       $('#gvClose').focus({preventScroll: true});
     });
     if (MOTION) M.animate('#gvTitle', {opacity: [0, 1], y: [40, 0]}, {duration: 1.1, delay: .2, ease: EASE});
     const found = await fetchCategory(cat);
     if (gv.hidden) return;
+    let mine;
     if (found.length) {
-      current = {items: found, i: 0};
+      const order = shuffle(found);                        // new random order every visit
+      current = {items: order, i: 0};
+      mine = cl = buildCluster(order.map(src => ({src})), c.title, false);
+      masonry.replaceChildren(cl.el);
+      await waitDims(cl.tiles.map(t => t.img));
+      if (gv.hidden || cl !== mine) return;
+      cl.tiles.forEach(t => { if (t.img.naturalWidth) t.r = t.img.naturalWidth / t.img.naturalHeight; });
       gvCount.textContent = found.length + (found.length > 1 ? ' photographs' : ' photograph');
-      found.forEach((src, k) => {
-        const t = document.createElement('figure');
-        t.className = 'tile'; t.dataset.index = k; t.tabIndex = 0;
-        t.innerHTML = `<div class="ti"><img src="${src}" alt="${c.title} photograph ${k + 1}" loading="lazy"></div><figcaption class="mono"><span>${pad2(k + 1)}</span><span class="exifslot"></span></figcaption>`;
-        t.addEventListener('click', () => openLightbox(k));
-        t.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(k); } });
-        addTile(t, k);
-        readExif(src).then(ex => { if (ex) t.querySelector('.exifslot').textContent = ex; });
-      });
     } else {
       current = {items: [], i: 0};
       gvCount.textContent = 'Add photos to /' + c.folder;
-      PH_RATIOS.forEach((ratio, k) => {
-        const t = document.createElement('div');
-        t.className = 'tile'; t.style.cursor = 'default';
-        t.innerHTML = `<div class="tile-ph" style="aspect-ratio:${ratio}">${camSvg}</div>`;
-        addTile(t, k);
-      });
+      mine = cl = buildCluster(PH_RATIOS.map(ratio => { const [a, b] = ratio.split('/').map(Number); return {r: a / b}; }), c.title, true);
+      masonry.replaceChildren(cl.el);
     }
+    packCluster();
+    scatterIn(mine);
   }
+
+  // Intro: the photos start as one flat deck in the middle of the screen, then burst out to their places in the collage.
+  function scatterIn(mine){
+    const T = mine.tiles, n = T.length;
+    const done = () => { T.forEach(t => { t.el.style.transition = ''; t.el.style.transitionDelay = ''; t.el.style.zIndex = ''; }); mine.ready = true; };
+    if (reduce || !n) { T.forEach(t => { setV(t, 0, 0, 0, 1, 0, 0, t.rot); t.el.classList.add('in'); }); mine.ready = true; return; }
+    const box = mine.el.getBoundingClientRect();
+    const sx = innerWidth / 2 - box.left, sy = innerHeight * .55 - box.top;             // deck centre, in collage coordinates
+    const SW = Math.min(280, mine.W * .4);
+    const card = t => Math.sqrt(SW * SW * .75 / (t.w * t.h));                         // every photo the same size in the deck
+    const at = (t, x, y, rot, z) => { setV(t, sx + x - t.cx, sy + y - t.cy, 0, card(t), 0, 0, rot); if (z != null) t.el.style.zIndex = z; };
+    const deck = T.slice();
+    const square = () => deck.forEach((t, k) => at(t, rand(-3, 3), rand(-3, 3) - k * .35, rand(-4, 4), 20 + k));
+    const explode = () => {                                 // everything bursts out to its place at once
+      T.forEach(t => {
+        t.el.style.transition = 'transform .95s cubic-bezier(.16,1.12,.3,1), opacity .3s ease';
+        t.el.style.transitionDelay = Math.round(rand(0, 140)) + 'ms';
+        setV(t, 0, 0, 0, 1, 0, 0, t.rot);
+      });
+    };
+    T.forEach(t => { t.el.style.transition = 'none'; });
+    square();                                               // the deck appears
+    T.forEach(t => t.el.classList.add('in'));
+    void mine.el.offsetWidth;
+    const steps = [[() => {}, 520], [explode, 1150], [done, 0]];     // hold the deck a moment, then burst
+    let i = 0;
+    (function next(){
+      if (cl !== mine) return;
+      const [fn, wait] = steps[i++];
+      fn();
+      if (i < steps.length) setTimeout(next, wait);
+    })();
+  }
+
   function closeGallery(){
     if (gv.hidden) return;
     shutter(() => { gv.hidden = true; lock(false); lastBtn && lastBtn.focus({preventScroll: true}); });
@@ -719,9 +1001,14 @@
     const n = current.items.length, src = current.items[current.i];
     lbImg.src = src; lbImg.alt = gvTitle.textContent + ' photograph ' + (current.i + 1);
     $('#lbTitle').textContent = gvTitle.textContent + ' — ' + pad2(current.i + 1) + ' / ' + pad2(n);
-    const slot = $('#lbExif'); slot.textContent = '';
-    readExif(src).then(ex => { if (current.items[current.i] === src) slot.textContent = ex || ''; });
-    [1, -1].forEach(d => { const p = new Image(); p.src = current.items[(current.i + d + n) % n]; });
+    const shot = $('#lbShot'); shot.classList.remove('on');
+    readShot(src).then(x => {
+      if (current.items[current.i] !== src || !x) return;
+      $('#lbCam').textContent = [x.camera, x.lens].filter(Boolean).join('  ·  ');
+      $('#lbSet').innerHTML = x.set.map(v => `<span>${v}</span>`).join('');
+      shot.classList.add('on');
+    });
+    [1, -1].forEach(d => { const nb = current.items[(current.i + d + n) % n], p = new Image(); p.src = nb; readShot(nb); });
     if (MOTION) M.animate(lbImg, {opacity: [0, 1], filter: ['blur(10px)', 'blur(0px)']}, {duration: .6, ease: EASE});
   }
   function step(d){ if (!current.items.length) return; current.i = (current.i + d + current.items.length) % current.items.length; renderLb(); }
