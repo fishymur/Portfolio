@@ -73,6 +73,8 @@
   .menu.open{opacity:1;visibility:visible;transition:opacity .45s,visibility 0s}
   .menu a{display:flex;justify-content:space-between;align-items:baseline;font-size:clamp(44px,13vw,80px);line-height:1.08;letter-spacing:-.045em;border-bottom:1px solid var(--line);transform:translateY(24px);opacity:0;transition:transform .7s var(--ease),opacity .5s}
   .menu.open a{transform:none;opacity:1;transition-delay:calc(.08s + var(--i)*.06s)}
+  .menu-foot{display:none;flex-direction:column;gap:6px;margin-top:30px;font-size:15px;color:var(--muted)}
+  .menu .menu-foot a{font-size:15px;line-height:1.5;letter-spacing:0;border:0;transform:none;opacity:1}
   .menu a small{font-size:14px;letter-spacing:0;color:var(--muted);font-feature-settings:"tnum" 1}
 
   /* ---------- HERO: frame zooms to full-bleed on scroll ---------- */
@@ -246,36 +248,70 @@
     .about-grid,.faq-grid,.contact-grid{grid-template-columns:1fr}
     .portrait{max-width:520px}
   }
+  .index-bar{display:none}
   @media (hover:none),(max-width:960px){
     .work-grid{grid-template-columns:1fr}
     .still{display:none}
-    .row{grid-template-columns:96px 1fr auto;align-items:center}
-    .row-thumb{display:block;grid-column:1;grid-row:1;aspect-ratio:4/3}
+    /* touch: the six categories become a swipeable row of big photo cards */
+    .index{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;
+      margin:0 calc(var(--pad) * -1);padding:0 var(--pad) 2px;scroll-padding:0 var(--pad);border-top:0}
+    .index::-webkit-scrollbar{display:none}
+    .index>li{flex:0 0 min(78%,420px);scroll-snap-align:start}
+    .row{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0;border:0}
+    .row-thumb{display:block;order:-1;aspect-ratio:4/5;margin-bottom:14px}
     .row-thumb img{width:100%;height:100%;object-fit:cover}
-    .row-n{display:none}
-    .row-main{grid-column:2}
+    .row-n{padding:0 0 2px;font-size:13px}
+    .row-title{font-size:clamp(30px,8vw,40px);line-height:1.05}
     .row-more{grid-template-rows:1fr}
-    .row-sub{padding-top:4px;font-size:14px}
-    .row-go{padding-top:0}
-    .index.has-active .row,.index .row.is-active{opacity:1;padding:20px 0}
+    .row-sub{padding-top:2px;font-size:15px}
+    .row-go{display:none}
+    .index.has-active .row,.index .row.is-active{opacity:1;padding:0}
     .row.is-active .row-title{transform:none}
+    .index-bar{display:block;position:relative;height:2px;margin-top:22px;background:var(--line);overflow:hidden}
+    .index-bar i{position:absolute;top:0;bottom:0;left:0;width:30%;background:var(--ink)}
   }
   @media (max-width:640px){
-    .frame{aspect-ratio:3/4;width:min(78vw,calc((100svh - 320px)*.75))}
-    .fm{display:none}
-    .sec-head{grid-template-columns:1fr}
-    .row2{grid-template-columns:1fr}
-    .row{grid-template-columns:88px 1fr;gap:14px}
-    .row-title{font-size:clamp(28px,8.6vw,40px)}
-    .row-go{display:none}
+    /* hero: the photo fills the screen and the type sits on it, bottom-left */
+    .hero,.hero.static{height:auto}
+    .hero-sticky{position:relative;height:100svh;min-height:560px;align-items:flex-end;justify-content:flex-start}
+    .hero-bg,.shader{display:none}
+    .hero-inner{position:static;align-items:flex-start;gap:12px;padding:0 var(--pad) 34px}
+    .hero-inner>.hero-fade{position:relative;z-index:2;align-items:flex-start!important;opacity:1!important}
+    .frame{position:absolute;inset:0;z-index:0;width:100%;height:100%;aspect-ratio:auto;box-shadow:none;transform:none!important}
+    .frame::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.32) 0%,rgba(0,0,0,0) 24%,rgba(0,0,0,0) 46%,rgba(0,0,0,.62) 100%)}
+    .corner,.fm,.hero-bottom{display:none}
+    .kicker{color:rgba(255,255,255,.85)}
+    .title{text-align:left;color:#fff;font-size:clamp(46px,14vw,68px);line-height:.92}
+    .credits{justify-content:flex-start;gap:2px 14px;color:rgba(255,255,255,.75)}
+    .nav:not(.scrolled){color:#fff}
+    .nav:not(.scrolled) .nav-toggle{border-color:rgba(255,255,255,.45)}
+    .nav.menu-open{color:var(--ink)}
+    .nav.menu-open .nav-toggle{border-color:var(--line)}
+    /* sections: tighter rhythm, bigger touch targets, edge-to-edge portrait */
+    .h2{font-size:clamp(38px,10.5vw,52px)}
+    .work{padding:72px 0 64px}
+    .sec-head{grid-template-columns:1fr;margin-bottom:28px}
+    .about{padding:64px 0}
+    .portrait{max-width:none;margin:0 calc(var(--pad) * -1)}
+    .lead{font-size:20px}
+    .faq{padding:24px 0 72px}
     .faq-q{grid-template-columns:30px 1fr 28px}
     .faq-a p{padding-left:42px}
+    .contact{padding:64px 0 72px}
+    .row2{grid-template-columns:1fr}
     .info div{grid-template-columns:96px 1fr}
-      .hero-bottom .hb-l{display:none}
-    .hero-bottom{justify-content:center}
+    .form-foot{flex-direction:column;align-items:stretch}
+    .submit{justify-content:center;padding:17px 22px}
     .foot-row{grid-template-columns:1fr;text-align:left}
     .foot-row .mid{text-align:left}
     .foot-links{justify-content:flex-start}
+    .menu-foot{display:flex}
+    /* gallery + viewer */
+    .gv-head{padding:28px 0 18px}
+    .gv-title{font-size:clamp(44px,13vw,64px)}
+    .masonry{padding:18px var(--pad) 80px}
+    .lb img{max-width:calc(100vw - 24px);max-height:64vh}
+    .lb-top,.lb-bot{padding:12px 14px}
   }
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
@@ -298,6 +334,7 @@
   <a href="#about" style="--i:1">About <small>02</small></a>
   <a href="#faq" style="--i:2">FAQ <small>03</small></a>
   <a href="#contact" style="--i:3">Contact <small>04</small></a>
+  <div class="menu-foot"><a href="mailto:mtomam01@gmail.com">mtomam01@gmail.com</a><a href="https://instagram.com/murakawatoma" target="_blank" rel="noopener">@murakawatoma</a></div>
 </div>
 
 <main>
@@ -370,6 +407,7 @@
           <span class="row-go meta">View →</span>
         </button></li>
       </ol>
+      <div class="index-bar" aria-hidden="true"><i id="indexBar"></i></div>
       <aside class="still rv" data-d=".1">
         <div class="still-frame" id="stillFrame" data-frame>
           <img class="is-on" src="cover-graduations.jpg" alt="Graduation photography" onerror="imgFail(this)">
@@ -505,6 +543,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/lite.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@14.0.0/dist/motion.js"></script>
+
 <script>
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
@@ -605,6 +644,7 @@
     menu.setAttribute('aria-hidden', String(!open));
     toggle.setAttribute('aria-expanded', String(open));
     toggle.firstElementChild.textContent = open ? 'Close' : 'Menu';
+    nav.classList.toggle('menu-open', open);
     lock(open);
   }
   toggle.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
@@ -637,7 +677,9 @@
     frame.style.transform = prev;
   }
   const easeIO = p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+  const phone = matchMedia('(max-width: 640px)');
   function applyHero(p){
+    if (phone.matches) { frame.style.transform = ''; fades.forEach(el => { el.style.opacity = ''; }); frame.style.setProperty('--meta', 1); return; }
     p = Math.min(1, Math.max(0, p));
     const e = easeIO(Math.min(1, p * 1.12));
     frame.style.transform = `translate3d(0,${(base.dy * e).toFixed(2)}px,0) scale(${(1 + (base.s - 1) * e).toFixed(4)})`;
@@ -684,6 +726,9 @@
   index.addEventListener('pointerleave', () => setActive(-1));
   index.addEventListener('focusout', e => { if (!index.contains(e.relatedTarget)) setActive(-1); });
   $('#stillFrame').addEventListener('click', () => rows[shown].click());
+  const ibar = $('#indexBar');
+  const updBar = () => { const sw = index.scrollWidth; if (!sw) return; ibar.style.width = (index.clientWidth / sw * 100) + '%'; ibar.style.transform = `translateX(${index.scrollLeft / index.clientWidth * 100}%)`; };
+  index.addEventListener('scroll', updBar, {passive: true}); addEventListener('resize', updBar); updBar();
 
   /* ================= GALLERY: shuffled 3D cluster ================= */
   let current = {items: [], i: 0}, lastBtn = null;
@@ -705,7 +750,7 @@
     const W = masonry.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
     if (W <= 0) return;
     cl.W = W;
-    const gap = W < 600 ? 12 : 18, H0 = W < 600 ? 175 : W < 1000 ? 245 : Math.min(360, W / 3.9);   // target row height (photo size)
+    const gap = W < 600 ? 12 : 18, H0 = W < 600 ? W * .62 : W < 1000 ? 245 : Math.min(360, W / 3.9);   // target row height (photo size)
     const T = cl.tiles;
     if (!cl.slots) {                                    // decided once per visit, so a resize doesn't reshuffle
       cl.slots = [];
@@ -715,7 +760,8 @@
         else cl.slots.push([x]);
       }
       cl.rowVar = Array.from({length: T.length + 2}, () => rand(.86, 1.14));
-      T.forEach(t => { t.k = rand(.86, 1); t.jx = rand(-1, 1); t.jy = rand(-1, 1); });
+      const narrow = W < 600;
+      T.forEach(t => { t.k = rand(narrow ? .93 : .86, 1); t.jx = rand(-1, 1) * (narrow ? .5 : 1); t.jy = rand(-1, 1) * (narrow ? .5 : 1); if (narrow) { t.rot = +(t.rot / 2).toFixed(2); t.el.style.setProperty('--rot', t.rot + 'deg'); } });
     }
     const slotR = s => s.length === 1 ? s[0].r : 1 / (1 / s[0].r + 1 / s[1].r);
     const build = base => {
@@ -1075,7 +1121,7 @@
     const noise = P.getShaderNoiseTexture();
     if (!noise.complete) await new Promise((res, rej) => { noise.onload = res; noise.onerror = rej; });
     const col = P.getShaderColorFromString;
-    new P.ShaderMount(document.getElementById('heroShader'), P.grainGradientFragmentShader, {
+    if (!matchMedia('(max-width: 640px)').matches) new P.ShaderMount(document.getElementById('heroShader'), P.grainGradientFragmentShader, {
       u_colorBack: col('#F6F4EF'),
       u_colors: ['#E6E1D7', '#F6F4EF', '#DCD6CB', '#EDEAE6'].map(col), u_colorsCount: 4,
       u_softness: 1, u_intensity: .2, u_noise: .22, u_shape: P.GrainGradientShapes.corners, u_noiseTexture: noise,
