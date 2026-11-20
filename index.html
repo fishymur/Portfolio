@@ -7,16 +7,18 @@
 <meta name="description" content="Toma Murakawa is a photographer based in Stanford, California, making graduation, portrait, sports, landscape, event, and everyday photographs on commission.">
 <meta name="theme-color" content="#F6F4EF">
 <!--
-  Type:  Overused Grotesk — github.com/RandomMaerks/Overused-Grotesk (OFL), one family for everything;
-         small text is set in it too (sentence case, tabular figures) rather than in a monospace.
-  Motion: motion.dev (scroll-linked frame, intro, reveals) · Paper Shaders (hero paper grain)
-  Galleries: shuffled every visit — a flat deck of photos bursts out into a scattered collage (loose justified
+  Type:  Instrument Serif (headlines, names) + Newsreader (body, small text) — Google Fonts (OFL).
+  Motion: motion.dev (intro, reveals) · Hero: scroll flipbook — scrolling flips through flip/*.jpg (small web copies
+          of gallery photos) while the frame grows to full-bleed and lands on hero.jpg
+  Galleries: shuffled every visit — photos fade into a scattered collage (loose justified
   rows, so no big empty pockets); hovering a photo brings it forward in 3D while its neighbours part around it —
   positions are solved first so pushed photos always keep a small gap.
   Everything degrades to a static, fully working page if a CDN is unavailable.
 -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="preload" as="font" type="font/woff2" crossorigin href="https://cdn.jsdelivr.net/npm/@sarap422/font-overused-grotesk@1.1.5/OverusedGrotesk-Roman.woff2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Instrument+Serif:ital@0;1&display=swap">
 <script>
   document.documentElement.classList.add('js', 'js-motion');
   window.imgFail = function (img) {
@@ -30,27 +32,28 @@
   };
 </script>
 <style>
-  @font-face{font-family:'Overused Grotesk';font-weight:400;font-style:normal;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@sarap422/font-overused-grotesk@1.1.5/OverusedGrotesk-Roman.woff2) format('woff2')}
-  @font-face{font-family:'Overused Grotesk';font-weight:500;font-style:normal;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@sarap422/font-overused-grotesk@1.1.5/OverusedGrotesk-Medium.woff2) format('woff2')}
-
   :root{
     --paper:#F6F4EF; --paper-2:#ECE8E0; --white:#FBFAF7;
     --ink:#16181D; --ink-2:#4A4D55; --muted:#8F8A81;
     --line:rgba(22,24,29,.12); --accent:#2B3D5C;
-    --sans:'Overused Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif;
+    --sans:'Newsreader',Georgia,'Times New Roman',serif;
+    --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
     --pad:clamp(18px,2.4vw,36px);
     --ease:cubic-bezier(.16,1,.3,1);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;letter-spacing:-.005em;-webkit-font-smoothing:antialiased;overflow-x:clip}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.5;letter-spacing:0;font-optical-sizing:auto;-webkit-font-smoothing:antialiased;overflow-x:clip}
   img{display:block;max-width:100%}
   a{color:inherit;text-decoration:none}
   button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
   ::selection{background:var(--accent);color:var(--white)}
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   .wrap{max-width:1560px;margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-  .meta{font-size:13px;line-height:1.35;letter-spacing:-.005em;font-feature-settings:"tnum" 1}
+  /* display type: editorial serif for names and headlines */
+  .brand,.menu>a,.h2,.row-title,.gv-title,.lead,.faq-q .q{font-family:var(--serif);font-weight:400}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .meta{font-size:14px;line-height:1.35;letter-spacing:.005em;font-feature-settings:"tnum" 1}
   .js-motion .intro,.js-motion .rv{opacity:0}
   .js-motion .intro{animation:safe 0s 3.2s forwards}
   @keyframes safe{to{opacity:1}}
@@ -62,7 +65,7 @@
   /* ---------- NAV ---------- */
   .nav{position:fixed;top:0;left:0;right:0;z-index:60;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:14px var(--pad);border-bottom:1px solid transparent;transition:background .5s,border-color .5s,backdrop-filter .5s}
   .nav.scrolled{background:rgba(246,244,239,.8);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);border-bottom-color:var(--line)}
-  .brand{font-weight:500;font-size:17px;letter-spacing:-.02em;justify-self:start}
+  .brand{font-size:23px;letter-spacing:-.01em;justify-self:start}
   .nav-links{display:flex;gap:2px;padding:4px;border:1px solid var(--line);border-radius:999px;background:rgba(251,250,247,.6);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
   .nav-links a{padding:6px 15px;border-radius:999px;font-size:14px;color:var(--ink-2);transition:color .3s,background .3s}
   .nav-links a:hover{color:var(--ink)}
@@ -71,39 +74,58 @@
   .nav-toggle{display:none;justify-self:end;padding:8px 14px;border:1px solid var(--line);border-radius:999px}
   .menu{position:fixed;inset:0;z-index:55;background:var(--paper);display:flex;flex-direction:column;justify-content:center;gap:4px;padding:100px var(--pad) 40px;opacity:0;visibility:hidden;transition:opacity .45s,visibility 0s .45s}
   .menu.open{opacity:1;visibility:visible;transition:opacity .45s,visibility 0s}
-  .menu a{display:flex;justify-content:space-between;align-items:baseline;font-size:clamp(44px,13vw,80px);line-height:1.08;letter-spacing:-.045em;border-bottom:1px solid var(--line);transform:translateY(24px);opacity:0;transition:transform .7s var(--ease),opacity .5s}
+  .menu a{display:flex;justify-content:space-between;align-items:baseline;font-size:clamp(48px,14vw,88px);line-height:1.08;letter-spacing:-.02em;border-bottom:1px solid var(--line);transform:translateY(24px);opacity:0;transition:transform .7s var(--ease),opacity .5s}
   .menu.open a{transform:none;opacity:1;transition-delay:calc(.08s + var(--i)*.06s)}
   .menu-foot{display:none;flex-direction:column;gap:6px;margin-top:30px;font-size:15px;color:var(--muted)}
   .menu .menu-foot a{font-size:15px;line-height:1.5;letter-spacing:0;border:0;transform:none;opacity:1}
   .menu a small{font-size:14px;letter-spacing:0;color:var(--muted);font-feature-settings:"tnum" 1}
 
-  /* ---------- HERO: frame zooms to full-bleed on scroll ---------- */
-  .hero{position:relative;height:190vh}
+  /* ---------- HERO: scroll flipbook — photos flip as you scroll, frame grows to full-bleed ---------- */
+  .hero{position:relative;height:280vh;background:var(--paper)}
+  .hero-sticky{position:sticky;top:0;height:100svh;min-height:560px;overflow:hidden;background:var(--paper)}   /* bg needed so the difference-blended type has something to invert */
+  .flip-frame{position:absolute;left:50%;top:50%;width:min(56vw,calc((100svh - 260px) * 1.5));aspect-ratio:3/2;translate:-50% -50%;background:var(--paper-2);box-shadow:0 40px 90px -40px rgba(22,24,29,.5);will-change:transform}
+  .flip-frame>div{position:absolute;inset:0;overflow:hidden}
+  .flip-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;visibility:hidden}
+  .flip-frame img.on{visibility:visible}
+  .hero-name{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;mix-blend-mode:difference;pointer-events:none}
+  .hero-name h1{font-family:var(--serif);font-weight:400;font-size:clamp(48px,8.4vw,156px);line-height:.88;letter-spacing:-.025em}
+  .hero-name h1 span{display:inline-block}
+  .hero-name .sub{display:none}
+  /* name styles — set with data-name on .hero (see NAME_STYLE in the script) */
+  /* split: "Toma" and "Murakawa" sit on either side of the frame */
+  .hero[data-name="split"] .hero-name{padding:0 var(--pad)}
+  .hero[data-name="split"] .hero-name h1{width:100%;display:flex;justify-content:space-between;align-items:center;font-size:clamp(40px,6.4vw,120px)}
+  .hero[data-name="split"] .hero-name br{display:none}
+  /* caption: a small museum-style label under the frame; fades as the frame grows */
+  .hero[data-name="caption"] .hero-name{inset:auto 0 auto 0;top:calc(50% + min(18.67vw, 50svh - 130px) + 22px);color:var(--ink);mix-blend-mode:normal;flex-direction:column}
+  .hero[data-name="caption"] .hero-name h1{font-size:clamp(26px,2.4vw,36px);line-height:1.1;letter-spacing:-.01em}
+  .hero[data-name="caption"] .hero-name br{display:none}
+  .hero[data-name="caption"] .hero-name span+br+span{margin-left:.25em}
+  .hero[data-name="caption"] .hero-name .sub{display:block;font-family:var(--sans);font-style:normal;font-size:14px;letter-spacing:0;color:var(--ink-2);margin-top:6px}
+  /* edge: the name runs up the left edge, one line */
+  .hero[data-name="edge"] .hero-name{justify-content:flex-start;padding-left:var(--pad)}
+  .hero[data-name="edge"] .hero-name h1{writing-mode:vertical-rl;rotate:180deg;font-size:clamp(44px,9svh,110px);line-height:1;white-space:nowrap}
+  .hero[data-name="edge"] .hero-name br{display:none}
+  .hero[data-name="edge"] .hero-name span+br+span{margin-top:.25em}
+  /* temporary comparison panel, only shown with ?try in the URL */
+  .try{position:fixed;z-index:120;right:12px;bottom:12px;display:grid;gap:8px;padding:12px;border:1px solid var(--line);border-radius:14px;background:rgba(251,250,247,.95);box-shadow:0 10px 40px -14px rgba(0,0,0,.4);font-size:13px}
+  .try div{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+  .try b{font-weight:500;width:52px}
+  .try a{padding:4px 10px;border:1px solid var(--line);border-radius:999px}
+  .try a.on{background:var(--ink);color:var(--white);border-color:var(--ink)}
+  .hero-hud{position:absolute;left:0;right:0;bottom:0;z-index:4;display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:16px;padding:18px var(--pad);color:#fff;mix-blend-mode:difference;pointer-events:none}
+  .hero-hud .r{justify-self:end;text-align:right}
+  .ruler{position:relative;width:min(320px,40vw);height:14px;background:repeating-linear-gradient(90deg,currentColor 0 1px,transparent 1px 10px) 0 100%/100% 6px no-repeat}
+  .ruler i{position:absolute;left:0;bottom:0;width:1.5px;height:14px;background:currentColor}
+  .flip-cat{font-family:var(--serif);font-style:italic;font-size:clamp(22px,2vw,30px);line-height:1}
   .hero.static{height:auto}
-  .hero-sticky{position:sticky;top:0;height:100vh;min-height:600px;overflow:hidden;display:flex;align-items:center;justify-content:center}
   .hero.static .hero-sticky{position:relative}
-  .hero-bg{position:absolute;inset:0;background:radial-gradient(60% 50% at 50% 40%,#FBFAF7,transparent 70%),var(--paper)}
-  .shader{position:absolute;inset:0}
-  .hero-inner{position:relative;z-index:2;width:100%;display:flex;flex-direction:column;align-items:center;gap:clamp(14px,2.4vh,26px);padding:76px var(--pad) 56px}
-  .kicker{color:var(--ink-2)}
-  .frame{--meta:1;width:min(1060px,84vw,calc((100vh - 330px)*2.2));aspect-ratio:2.2/1;box-shadow:0 40px 90px -40px rgba(22,24,29,.45);transform-origin:50% 50%;will-change:transform}
-  .frame img{width:100%;height:100%;object-fit:cover}
-  .corner{position:absolute;z-index:2;width:20px;height:20px;border:1.25px solid rgba(251,250,247,.85);opacity:var(--meta)}
-  .corner.tl{top:14px;left:14px;border-right:0;border-bottom:0}
-  .corner.tr{top:14px;right:14px;border-left:0;border-bottom:0}
-  .corner.bl{bottom:14px;left:14px;border-right:0;border-top:0}
-  .corner.br{bottom:14px;right:14px;border-left:0;border-top:0}
-  .fm{position:absolute;z-index:2;color:rgba(251,250,247,.9);text-shadow:0 1px 10px rgba(0,0,0,.35);opacity:var(--meta)}
-  .fm-tl{top:18px;left:46px}.fm-br{bottom:18px;right:46px}
-  .title{font-weight:500;font-size:clamp(44px,6.6vw,116px);line-height:.95;letter-spacing:-.05em;text-align:center}
-  .title .ch,.title .t2{display:inline-block}
-  .credits{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:4px 22px;color:var(--muted)}
-  .hero-bottom{position:absolute;z-index:2;left:var(--pad);right:var(--pad);bottom:22px;display:flex;justify-content:space-between;color:var(--muted)}
+  .hero.static .ruler{display:none}
 
   /* ---------- SECTION SHELL ---------- */
   section{position:relative}
   .eb{display:block;font-size:15px;color:var(--muted);margin-bottom:16px}
-  .h2{font-weight:500;font-size:clamp(44px,6vw,104px);line-height:.94;letter-spacing:-.05em}
+  .h2{font-size:clamp(48px,6.6vw,112px);line-height:.98;letter-spacing:-.025em}
 
   /* ---------- WORK: index + still preview ---------- */
   .work{z-index:3;background:var(--paper);padding:clamp(110px,16vh,180px) 0 clamp(80px,12vh,140px)}
@@ -113,7 +135,7 @@
   .index{list-style:none;border-top:1px solid var(--ink)}
   .row{width:100%;display:grid;grid-template-columns:52px 1fr auto;align-items:start;gap:16px;padding:20px 0;border-bottom:1px solid var(--line);transition:padding .6s var(--ease),opacity .45s}
   .row-n{color:var(--muted);padding-top:.9em}
-  .row-title{display:block;font-size:clamp(36px,4.4vw,74px);line-height:1;letter-spacing:-.05em;transform-origin:0 70%;transition:transform .6s var(--ease)}
+  .row-title{display:block;font-size:clamp(40px,4.8vw,80px);line-height:1;letter-spacing:-.02em;transform-origin:0 70%;transition:transform .6s var(--ease)}
   .row-more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s var(--ease)}
   .row-more>span{overflow:hidden}
   .row-sub{display:block;padding-top:10px;color:var(--ink-2);font-size:16px}
@@ -135,7 +157,7 @@
   .about-grid{display:grid;grid-template-columns:5fr 6fr;gap:clamp(32px,7vw,120px);align-items:center}
   .portrait{aspect-ratio:4/5}
   .portrait img{width:100%;height:100%;object-fit:cover}
-  .lead{font-size:clamp(20px,1.8vw,26px);line-height:1.32;letter-spacing:-.02em;margin:30px 0 20px;max-width:32ch}
+  .lead{font-size:clamp(22px,2vw,30px);line-height:1.25;letter-spacing:-.005em;margin:30px 0 20px;max-width:32ch}
   .body{color:var(--ink-2);max-width:50ch;margin-bottom:14px}
   .cred{margin-top:38px;border-top:1px solid var(--ink);max-width:560px}
   .cred div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
@@ -149,7 +171,7 @@
   .faq-item{border-bottom:1px solid var(--line)}
   .faq-q{width:100%;display:grid;grid-template-columns:44px 1fr 28px;align-items:center;gap:12px;padding:22px 0}
   .faq-q .n{color:var(--muted)}
-  .faq-q .q{font-size:clamp(20px,1.8vw,26px);line-height:1.2;letter-spacing:-.025em}
+  .faq-q .q{font-size:clamp(22px,2vw,30px);line-height:1.2;letter-spacing:-.005em}
   .faq-ico{width:28px;height:28px;border:1px solid var(--line);border-radius:50%;position:relative;transition:background .3s,border-color .3s}
   .faq-ico::before,.faq-ico::after{content:"";position:absolute;left:8px;right:8px;top:50%;height:1px;background:var(--ink);transition:transform .5s var(--ease)}
   .faq-ico::after{transform:rotate(90deg)}
@@ -173,7 +195,7 @@
   .info a:hover{background-size:100% 1px}
   form{display:grid;gap:26px}
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
-  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:2px}
+  .field label{display:block;font-size:14px;color:var(--muted);margin-bottom:2px}
   .field input,.field select,.field textarea{width:100%;background:transparent;border:0;border-bottom:1px solid rgba(22,24,29,.25);border-radius:0;color:var(--ink);font:inherit;font-size:18px;letter-spacing:-.01em;padding:10px 0;transition:border-color .3s;-webkit-appearance:none;appearance:none}
   .field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%2316181D' stroke-width='1.2'%3E%3Cpath d='m1 1 5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 2px center;padding-right:24px}
   .field textarea{resize:vertical;min-height:96px}
@@ -202,13 +224,13 @@
   .pill{padding:8px 16px;border:1px solid var(--line);border-radius:999px;background:var(--white);font-size:14px;transition:background .3s,color .3s,border-color .3s}
   .pill:hover{background:var(--ink);color:var(--white);border-color:var(--ink)}
   .gv-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin:0 var(--pad);padding:clamp(36px,8vh,90px) 0 clamp(22px,4vh,40px);border-bottom:1px solid var(--ink)}
-  .gv-title{font-weight:500;font-size:clamp(52px,9vw,156px);line-height:.88;letter-spacing:-.055em}
+  .gv-title{font-size:clamp(56px,9.6vw,168px);line-height:.92;letter-spacing:-.025em}
   .gv-head .meta{color:var(--ink-2)}
   /* 3D cluster: photos packed around the centre; hovering one brings it forward, neighbours are pushed away and tilt back */
   .gv-scroll{overflow-x:hidden}
   .masonry{padding:30px var(--pad) 110px}
   .cluster{position:relative;margin:0 auto;--mx:0;--my:0}
-  .ct{position:absolute;--px:0px;--py:0px;--pz:0px;--ez:-260px;--s:1;--rx:0deg;--ry:0deg;--rot:0deg;--d:0;
+  .ct{position:absolute;--px:0px;--py:0px;--pz:0px;--ez:0px;--s:1;--rx:0deg;--ry:0deg;--rot:0deg;--d:0;
     opacity:0;cursor:zoom-in;z-index:1;will-change:transform;
     transform:translate(calc(var(--px) + var(--mx) * var(--d) * 16px),calc(var(--py) + var(--my) * var(--d) * 12px)) perspective(1200px) translateZ(calc(var(--pz) + var(--ez))) rotateX(calc(var(--rx) + var(--my) * -3deg)) rotateY(calc(var(--ry) + var(--mx) * 4deg)) rotate(var(--rot)) scale(var(--s));
     transition:transform .9s cubic-bezier(.22,1,.36,1),opacity .7s ease}
@@ -235,7 +257,7 @@
   .lb-shot.on{opacity:1}
   .lb-cam{font-size:14px;color:var(--ink);letter-spacing:-.01em}
   .lb-cam:empty{display:none}
-  .lb-set{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 18px;font-size:13px}
+  .lb-set{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 18px;font-size:14px}
   .lb-top,.lb-bot{position:absolute;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px var(--pad);color:var(--ink-2)}
   .lb-top{top:0}.lb-bot{bottom:0}
   .lb-nav{display:flex;gap:8px}
@@ -260,8 +282,8 @@
     .row{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0;border:0}
     .row-thumb{display:block;order:-1;aspect-ratio:4/5;margin-bottom:14px}
     .row-thumb img{width:100%;height:100%;object-fit:cover}
-    .row-n{padding:0 0 2px;font-size:13px}
-    .row-title{font-size:clamp(30px,8vw,40px);line-height:1.05}
+    .row-n{padding:0 0 2px;font-size:14px}
+    .row-title{font-size:clamp(34px,9vw,44px);line-height:1.05}
     .row-more{grid-template-rows:1fr}
     .row-sub{padding-top:2px;font-size:15px}
     .row-go{display:none}
@@ -271,29 +293,19 @@
     .index-bar i{position:absolute;top:0;bottom:0;left:0;width:30%;background:var(--ink)}
   }
   @media (max-width:640px){
-    /* hero: the photo fills the screen and the type sits on it, bottom-left */
-    .hero,.hero.static{height:auto}
-    .hero-sticky{position:relative;height:100svh;min-height:560px;align-items:flex-end;justify-content:flex-start}
-    .hero-bg,.shader{display:none}
-    .hero-inner{position:static;align-items:flex-start;gap:12px;padding:0 var(--pad) 34px}
-    .hero-inner>.hero-fade{position:relative;z-index:2;align-items:flex-start!important;opacity:1!important}
-    .frame{position:absolute;inset:0;z-index:0;width:100%;height:100%;aspect-ratio:auto;box-shadow:none;transform:none!important}
-    .frame::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.32) 0%,rgba(0,0,0,0) 24%,rgba(0,0,0,0) 46%,rgba(0,0,0,.62) 100%)}
-    .corner,.fm,.hero-bottom{display:none}
-    .kicker{color:rgba(255,255,255,.85)}
-    .title{text-align:left;color:#fff;font-size:clamp(46px,14vw,68px);line-height:.92}
-    .credits{justify-content:flex-start;gap:2px 14px;color:rgba(255,255,255,.75)}
-    .nav:not(.scrolled){color:#fff}
-    .nav:not(.scrolled) .nav-toggle{border-color:rgba(255,255,255,.45)}
-    .nav.menu-open{color:var(--ink)}
-    .nav.menu-open .nav-toggle{border-color:var(--line)}
+    /* hero: portrait-shaped frame on phones */
+    .flip-frame{width:78vw;aspect-ratio:4/5}
+    .hero[data-name="caption"] .hero-name{top:calc(50% + 48.75vw + 18px)}
+    .hero[data-name="split"] .hero-name h1{flex-direction:column;justify-content:center;gap:calc(97.5vw + 10px);font-size:clamp(40px,12vw,60px)}
+    .ruler{display:none}
+    .hero-hud{grid-template-columns:1fr 1fr}
     /* sections: tighter rhythm, bigger touch targets, edge-to-edge portrait */
-    .h2{font-size:clamp(38px,10.5vw,52px)}
+    .h2{font-size:clamp(42px,11.5vw,58px)}
     .work{padding:72px 0 64px}
     .sec-head{grid-template-columns:1fr;margin-bottom:28px}
     .about{padding:64px 0}
     .portrait{max-width:none;margin:0 calc(var(--pad) * -1)}
-    .lead{font-size:20px}
+    .lead{font-size:22px}
     .faq{padding:24px 0 72px}
     .faq-q{grid-template-columns:30px 1fr 28px}
     .faq-a p{padding-left:42px}
@@ -338,26 +350,18 @@
 </div>
 
 <main>
-<!-- HERO -->
+<!-- HERO: scroll flipbook -->
 <section class="hero" id="top">
   <div class="hero-sticky" id="heroSticky">
-    <div class="hero-bg"></div>
-    <div class="shader" id="heroShader" aria-hidden="true"></div>
-    <div class="hero-inner">
-      <div class="hero-fade"><p class="kicker meta intro">Stanford, California — Available on commission</p></div>
-      <div class="frame intro" id="heroFrame" data-frame>
-        <img src="hero.jpg" alt="Photograph by Toma Murakawa" onerror="imgFail(this)">
-        <div class="ph">hero.jpg</div>
-        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
-        <span class="fm fm-tl meta">Stanford, CA</span>
-        <span class="fm fm-br meta">f/2 · 1/250 · ISO 100</span>
-      </div>
-      <div class="hero-fade" style="display:flex;flex-direction:column;align-items:center;gap:clamp(12px,2vh,20px)">
-        <h1 class="title intro" aria-label="Preserving the Moment."><span class="t1" aria-hidden="true">Preserving</span> <span class="t2" aria-hidden="true">the Moment.</span></h1>
-        <ul class="credits meta intro"><li>Graduations</li><li>Portraits</li><li>Sports</li><li>Landscape</li><li>Events</li><li>Life</li></ul>
-      </div>
+    <div class="flip-frame intro" id="flipFrame"><div id="flipStack">
+      <img class="on" src="hero.jpg" alt="Photograph by Toma Murakawa" data-cat="Stanford">
+    </div></div>
+    <div class="hero-name"><h1 class="intro"><span>Toma</span><br><span>Murakawa</span><em class="sub">Photographer — Stanford, California</em></h1></div>
+    <div class="hero-hud meta intro">
+      <span>Stanford, California<br>Photographer on commission</span>
+      <span class="ruler" aria-hidden="true"><i id="flipNeedle"></i></span>
+      <span class="r"><span class="flip-cat" id="flipCat">Stanford</span><br><span id="flipNum">Scroll ↓</span></span>
     </div>
-    <div class="hero-bottom meta hero-fade"><span class="hb-l intro">Photographs since 2021</span><span class="intro">Scroll ↓</span></div>
   </div>
 </section>
 
@@ -650,53 +654,71 @@
   toggle.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
   $$('.menu a').forEach(a => a.addEventListener('click', () => setMenu(false)));
 
-  /* ================= HERO INTRO ================= */
-  const t1 = $('.t1');
-  if (MOTION) {
-    const {animate, stagger} = M;
-    t1.innerHTML = [...t1.textContent].map(c => `<span class="ch" style="opacity:0">${c}</span>`).join('');
-    $('.title').style.opacity = 1;
-    $('.t2').style.opacity = 0;
-    animate('.kicker', {opacity: [0, 1], y: [10, 0]}, {duration: .8, delay: .1, ease: EASE});
-    animate('#heroFrame', {opacity: [0, 1], clipPath: ['inset(50% 0% 50% 0%)', 'inset(0% 0% 0% 0%)']}, {duration: 1.5, delay: .25, ease: SHUT});
-    animate('#heroFrame img', {scale: [1.2, 1]}, {duration: 2.2, delay: .25, ease: EASE});
-    animate('.t1 .ch', {opacity: [0, 1], y: ['0.3em', '0em'], filter: ['blur(8px)', 'blur(0px)']}, {duration: 1, delay: stagger(.04, {startDelay: .8}), ease: EASE});
-    animate('.t2', {opacity: [0, 1], y: [20, 0], filter: ['blur(8px)', 'blur(0px)']}, {duration: 1.1, delay: 1.2, ease: EASE});
-    animate('.credits', {opacity: [0, 1]}, {duration: 1, delay: 1.45});
-    animate('.hero-bottom .intro', {opacity: [0, 1]}, {duration: 1, delay: 1.65});
+  /* ================= HERO: scroll flipbook ================= */
+  const hero = $('#top'), sticky = $('#heroSticky'), flipFrame = $('#flipFrame'), stack = $('#flipStack');
+  // horizontal photos only (the frame is landscape), web-sized copies in flip/<category>-NN.jpg — keep counts in sync with the folder
+  const FLIP_SET = {graduations: 8, portraits: 6, sports: 3, landscape: 11, events: 10, life: 7};   // hand-picked, 45 photos
+  const FLIP_CATS = Object.keys(FLIP_SET);
+  const pool = [];
+  // ---- choices (the ?try panel overrides these so they can be compared) ----
+  const q = new URLSearchParams(location.search);
+  const NAME_STYLE = q.get('name') || 'caption';    // center · split · caption · edge
+  const FLIP_ORDER = q.get('order') || 'shuffle';      // category · mixed · shuffle
+  hero.dataset.name = NAME_STYLE;
+  const shuf = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const groups = FLIP_CATS.map(c => shuf(Array.from({length: FLIP_SET[c]}, (_, k) => ({src: `flip/${c}-${pad2(k + 1)}.jpg`, cat: c[0].toUpperCase() + c.slice(1)}))));   // each category, shuffled within
+  pool.length = 0;
+  if (FLIP_ORDER === 'shuffle') pool.push(...shuf(groups.flat()));                         // fully random
+  else if (FLIP_ORDER === 'mixed') for (let k = 0; k < Math.max(...Object.values(FLIP_SET)); k++) groups.forEach(g => { if (g[k]) pool.push(g[k]); });   // one from each category in turn
+  else groups.forEach(g => pool.push(...g));                                           // chapters: all graduations, then portraits, …
+  if (q.has('try')) {
+    const link = (k, v, label) => { const u = new URLSearchParams(q); u.set(k, v); return `<a href="?${u}" class="${(k === 'name' ? NAME_STYLE : FLIP_ORDER) === v ? 'on' : ''}">${label}</a>`; };
+    document.body.insertAdjacentHTML('beforeend', `<div class="try"><div><b>Name</b>${link('name', 'center', 'Centered')}${link('name', 'split', 'Split')}${link('name', 'caption', 'Caption')}${link('name', 'edge', 'Edge')}</div><div><b>Order</b>${link('order', 'category', 'By category')}${link('order', 'mixed', 'Mixed')}${link('order', 'shuffle', 'Shuffled')}</div></div>`);
   }
-
-  /* ================= HERO SCROLL: frame → full-bleed ================= */
-  const hero = $('#top'), sticky = $('#heroSticky'), frame = $('#heroFrame'), fades = $$('.hero-fade');
-  const base = {dy: 0, s: 1};
-  function measure(){
-    const prev = frame.style.transform; frame.style.transform = 'none';
-    const r = frame.getBoundingClientRect(), st = sticky.getBoundingClientRect();
-    base.dy = st.height / 2 - (r.top - st.top + r.height / 2);
-    base.s = Math.max(st.width / r.width, st.height / r.height) * 1.01;
-    frame.style.transform = prev;
-  }
+  const heroImg = stack.querySelector('img');
+  const flips = pool.map((p, k) => {
+    const im = new Image(); im.alt = ''; im.decoding = 'async'; im.dataset.cat = p.cat;
+    if (k < 3) im.src = p.src; else im.dataset.src = p.src;          // first few now, the rest once the page has loaded
+    stack.insertBefore(im, heroImg); return im;
+  });
+  flips.push(heroImg);                                              // always lands on the hero shot
+  const loadRest = () => flips.forEach(im => { if (im.dataset.src) { im.src = im.dataset.src; delete im.dataset.src; } });
+  if (document.readyState === 'complete') loadRest(); else addEventListener('load', loadRest);
+  const ready = im => im.complete && im.naturalWidth > 0;
+  let flipCur = flips.length - 1;
   const easeIO = p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
-  const phone = matchMedia('(max-width: 640px)');
-  function applyHero(p){
-    if (phone.matches) { frame.style.transform = ''; fades.forEach(el => { el.style.opacity = ''; }); frame.style.setProperty('--meta', 1); return; }
-    p = Math.min(1, Math.max(0, p));
-    const e = easeIO(Math.min(1, p * 1.12));
-    frame.style.transform = `translate3d(0,${(base.dy * e).toFixed(2)}px,0) scale(${(1 + (base.s - 1) * e).toFixed(4)})`;
-    const f = Math.max(0, 1 - p * 2.6).toFixed(3);
-    fades.forEach(el => { el.style.opacity = f; });
-    frame.style.setProperty('--meta', f);
+  function applyHero(){
+    const r = hero.getBoundingClientRect();
+    const p = Math.min(1, Math.max(0, -r.top / (r.height - innerHeight)));
+    // photos flip over the first 85% of the scroll, then it holds on the hero shot
+    let i = Math.min(flips.length - 1, Math.floor(Math.min(1, p / .85) * (flips.length - 1) + .0001));
+    if (i === 0 && !ready(flips[0])) i = flips.length - 1;            // nothing loaded yet: keep the hero shot
+    while (i > 0 && i !== flips.length - 1 && !ready(flips[i])) i--;  // not downloaded yet: hold the last one that is
+    if (i !== flipCur) {
+      flips[flipCur].classList.remove('on'); flips[i].classList.add('on'); flipCur = i;
+      $('#flipCat').textContent = flips[i].dataset.cat;
+      $('#flipNum').textContent = pad2(i + 1) + ' / ' + flips.length;
+    }
+    // the frame grows to fill the screen
+    const full = Math.max(sticky.offsetWidth / flipFrame.offsetWidth, sticky.offsetHeight / flipFrame.offsetHeight) * 1.01;
+    const g = easeIO(Math.min(1, Math.max(0, (p - .12) / .88)));
+    flipFrame.style.transform = `scale(${(1 + (full - 1) * g).toFixed(4)})`;
+    $('#flipNeedle').style.left = (p * 100).toFixed(2) + '%';
+    if (NAME_STYLE === 'caption') $('.hero-name').style.opacity = Math.max(0, 1 - g * 4).toFixed(3);
   }
   if (reduce) hero.classList.add('static');
   else {
-    measure();
-    addEventListener('resize', measure);
-    if (document.fonts) document.fonts.ready.then(measure);
-    if (M) M.scroll(p => applyHero(p), {target: hero, offset: ['start start', 'end end']});
-    else {
-      const h = () => { const r = hero.getBoundingClientRect(); applyHero(-r.top / (r.height - innerHeight)); };
-      addEventListener('scroll', h, {passive: true}); h();
-    }
+    let pend = false;
+    addEventListener('scroll', () => { if (!pend) { pend = true; requestAnimationFrame(() => { pend = false; applyHero(); }); } }, {passive: true});
+    addEventListener('resize', applyHero);
+    flips[0].addEventListener('load', applyHero, {once: true});
+    applyHero();
+  }
+  if (MOTION) {
+    M.animate('#flipFrame', {opacity: [0, 1]}, {duration: .6, delay: .15});
+    M.animate('#flipStack', {clipPath: ['inset(50% 0% 50% 0%)', 'inset(0% 0% 0% 0%)']}, {duration: 1.4, delay: .15, ease: SHUT});
+    M.animate('.hero-name h1', {opacity: [0, 1], y: [30, 0]}, {duration: 1.1, delay: .5, ease: EASE});
+    M.animate('.hero-hud', {opacity: [0, 1]}, {duration: 1, delay: .9});
   }
 
   /* ================= REVEALS ================= */
@@ -1002,37 +1024,10 @@
     scatterIn(mine);
   }
 
-  // Intro: the photos start as one flat deck in the middle of the screen, then burst out to their places in the collage.
+  // Intro: photos simply fade in where they belong.
   function scatterIn(mine){
-    const T = mine.tiles, n = T.length;
-    const done = () => { T.forEach(t => { t.el.style.transition = ''; t.el.style.transitionDelay = ''; t.el.style.zIndex = ''; }); mine.ready = true; };
-    if (reduce || !n) { T.forEach(t => { setV(t, 0, 0, 0, 1, 0, 0, t.rot); t.el.classList.add('in'); }); mine.ready = true; return; }
-    const box = mine.el.getBoundingClientRect();
-    const sx = innerWidth / 2 - box.left, sy = innerHeight * .55 - box.top;             // deck centre, in collage coordinates
-    const SW = Math.min(280, mine.W * .4);
-    const card = t => Math.sqrt(SW * SW * .75 / (t.w * t.h));                         // every photo the same size in the deck
-    const at = (t, x, y, rot, z) => { setV(t, sx + x - t.cx, sy + y - t.cy, 0, card(t), 0, 0, rot); if (z != null) t.el.style.zIndex = z; };
-    const deck = T.slice();
-    const square = () => deck.forEach((t, k) => at(t, rand(-3, 3), rand(-3, 3) - k * .35, rand(-4, 4), 20 + k));
-    const explode = () => {                                 // everything bursts out to its place at once
-      T.forEach(t => {
-        t.el.style.transition = 'transform .95s cubic-bezier(.16,1.12,.3,1), opacity .3s ease';
-        t.el.style.transitionDelay = Math.round(rand(0, 140)) + 'ms';
-        setV(t, 0, 0, 0, 1, 0, 0, t.rot);
-      });
-    };
-    T.forEach(t => { t.el.style.transition = 'none'; });
-    square();                                               // the deck appears
-    T.forEach(t => t.el.classList.add('in'));
-    void mine.el.offsetWidth;
-    const steps = [[() => {}, 520], [explode, 1150], [done, 0]];     // hold the deck a moment, then burst
-    let i = 0;
-    (function next(){
-      if (cl !== mine) return;
-      const [fn, wait] = steps[i++];
-      fn();
-      if (i < steps.length) setTimeout(next, wait);
-    })();
+    mine.tiles.forEach(t => { setV(t, 0, 0, 0, 1, 0, 0, t.rot); t.el.classList.add('in'); });
+    mine.ready = true;
   }
 
   function closeGallery(){
@@ -1113,21 +1108,5 @@
 })();
 </script>
 
-<!-- Paper Shaders: quiet paper grain behind the hero -->
-<script type="module">
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  try {
-    const P = await import('https://cdn.jsdelivr.net/npm/@paper-design/shaders@0.0.81/+esm');
-    const noise = P.getShaderNoiseTexture();
-    if (!noise.complete) await new Promise((res, rej) => { noise.onload = res; noise.onerror = rej; });
-    const col = P.getShaderColorFromString;
-    if (!matchMedia('(max-width: 640px)').matches) new P.ShaderMount(document.getElementById('heroShader'), P.grainGradientFragmentShader, {
-      u_colorBack: col('#F6F4EF'),
-      u_colors: ['#E6E1D7', '#F6F4EF', '#DCD6CB', '#EDEAE6'].map(col), u_colorsCount: 4,
-      u_softness: 1, u_intensity: .2, u_noise: .22, u_shape: P.GrainGradientShapes.corners, u_noiseTexture: noise,
-      u_fit: P.ShaderFitOptions.cover, u_scale: 1, u_rotation: 0, u_offsetX: 0, u_offsetY: 0, u_originX: .5, u_originY: .5, u_worldWidth: 0, u_worldHeight: 0
-    }, undefined, reduce ? 0 : .2, 0, 1, 1920 * 1080);
-  } catch (e) { console.warn('Paper Shaders unavailable — using CSS fallback.', e); }
-</script>
 </body>
 </html>
